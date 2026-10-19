@@ -12,6 +12,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- HTML5 QR Code Scanner Library for Smartphones -->
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+    <!-- LibSQL Client Module untuk Turso Cloud Database -->
+    <script type="module">
+      import { createClient } from "https://esm.sh/@libsql/client@0.6.0/web";
+
+      const tursoUrl = "https://easet-pkg-pelangai-asetpkgpelangai-del.aws-ap-northeast-1.turso.io";
+      const tursoToken = "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3OTI0MTg3NTgsImlkIjoiMDFhMTU0NzktZTMwMS03MzkxLWEwMmEtNDQ0ZjdjYzJhY2QzIiwia2lkIjoiaTBqODBsdkNLY1JRcUd6X3VDUjlsS2lRbDhtc29jaVRaUGRjek9qaHY0MCIsInJpZCI6ImZmMDUyOWEwLThkYTctNGNhOC1iMDA0LTI4NjZkMGZlOWNkYSJ9.GWbMFxkZOvyUR0TYbFuouhIspedCObUPtg-HOOImUDMPqFI2-bj-N2QbtCcqCXqnSBvwGEbGef9iQ9JLk_0ADQ";
+
+      window.db = createClient({
+        url: tursoUrl,
+        authToken: tursoToken,
+      });
+
+      console.log("Turso Cloud Database bersambung!");
+    </script>
     <script>
         tailwind.config = {
             theme: {
@@ -869,7 +884,7 @@
         </div>
     </div>
 
-    <!-- Modal Detail View / Profil Pantas Aset -->
+ <!-- Modal Detail View / Profil Pantas Aset -->
     <div id="modal-detail" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 hidden no-print">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative space-y-4">
             <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
@@ -884,24 +899,46 @@
 
             <div class="flex justify-center my-2">
                 <div class="p-2 border rounded-xl bg-white shadow-inner">
-                    <img id="modal-qr-img" src="" alt="QR Code" class="w-36 h-36">
+                    <img id="modal-qr-img" src="" alt="QR Code" class="w-32 h-32">
                 </div>
             </div>
 
             <div class="space-y-2 text-xs bg-slate-50 p-3 rounded-xl border border-slate-200">
-                <div class="flex justify-between"><span class="text-slate-500">Lokasi Penempatan:</span> <span id="modal-lokasi" class="font-semibold text-slate-800"></span></div>
+                <div class="flex justify-between items-center"><span class="text-slate-500">Lokasi Penempatan:</span> <span id="modal-lokasi" class="font-bold text-blue-900 text-right"></span></div>
                 <div class="flex justify-between"><span class="text-slate-500">Tarikh Diterima:</span> <span id="modal-tarikh" class="font-semibold text-slate-800"></span></div>
                 <div class="flex justify-between"><span class="text-slate-500">Harga Perolehan:</span> <span id="modal-harga" class="font-semibold text-slate-800"></span></div>
                 <div class="flex justify-between"><span class="text-slate-500">Status Semasa:</span> <span id="modal-status" class="font-bold text-emerald-600"></span></div>
             </div>
 
-            <!-- Action Buttons Dalam Profil Aset Kamera Telefon -->
-            <div class="grid grid-cols-2 gap-2 pt-2">
+            <!-- Ruangan Input Kemaskini Lokasi Baharu (Tersembunyi Secara Default) -->
+            <div id="box-kemaskini-lokasi" class="hidden bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-2">
+                <label class="block text-[11px] font-bold text-amber-900 uppercase">Pilih / Taip Lokasi Baharu:</label>
+                <div class="flex gap-2">
+                    <select id="select-lokasi-baharu" class="w-full p-2 text-xs border border-amber-300 rounded-lg outline-none bg-white font-semibold">
+                        <option value="Studio COE / Makmal Robotik">Studio COE / Makmal Robotik</option>
+                        <option value="Bilik Mesyuarat Utama">Bilik Mesyuarat Utama</option>
+                        <option value="Makmal Komputer / ICT">Makmal Komputer / ICT</option>
+                        <option value="Pejabat PKG">Pejabat PKG</option>
+                        <option value="Pusat Sumber Sekolah (PSS)">Pusat Sumber Sekolah (PSS)</option>
+                        <option value="Bilik Server / ICT">Bilik Server / ICT</option>
+                        <option value="Dipinjamkan Sementara">Dipinjamkan Sementara</option>
+                    </select>
+                    <button onclick="simpanLokasiBaharuTurso()" class="px-3 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold whitespace-nowrap shadow">
+                        Simpan
+                    </button>
+                </div>
+            </div>
+
+            <!-- Action Buttons Dalam Profil Aset Kamera Telefon (Grid 3 Butang) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
                 <button onclick="modalBukaBorangKEWPA2()" class="py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1 shadow">
-                    <i class="fa-solid fa-file-invoice"></i> Borang KEW.PA-2
+                    <i class="fa-solid fa-file-invoice"></i> KEW.PA-2
+                </button>
+                <button onclick="paparBoxTukarLokasi()" class="py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-900 rounded-lg text-xs font-bold flex items-center justify-center gap-1 shadow">
+                    <i class="fa-solid fa-location-dot"></i> Tukar Lokasi
                 </button>
                 <button onclick="modalLaporRosakPantas()" class="py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1 shadow">
-                    <i class="fa-solid fa-triangle-exclamation"></i> Lapor Kerosakan
+                    <i class="fa-solid fa-triangle-exclamation"></i> Kerosakan
                 </button>
             </div>
         </div>
@@ -960,12 +997,12 @@
             }))
         ];
 
-        let asetDatabase = [];
+       let asetDatabase = [];
         let aduanDatabase = [];
         let html5QrCodeScanner = null;
         let selectedAsetForModal = null;
 
-     window.addEventListener('DOMContentLoaded', () => {
+        window.addEventListener('DOMContentLoaded', () => {
             loadStorageData();
             updateDashboardStats();
             renderRecentTable();
@@ -975,12 +1012,50 @@
             populateAduanSelect();
             renderAduanList();
 
-            // BACA SEKSYEN TERAKHIR DARI URL HASH ATAU LOCALSTORAGE BILA REFRESH
+            // Tarik data dari Turso Cloud Database secara automatik
+            syncDataFromTurso();
+
+            // BACA SEKSYEN TERAKHIR BILA REFRESH
             const savedSection = window.location.hash.replace('#', '') || 
-                                 localStorage.getItem('eAset_active_section') || 
+                                 sessionStorage.getItem('eAset_active_section') || 
                                  'dashboard';
             showSection(savedSection);
         });
+
+        // FUNGSI SINKRONI DATA DARI TURSO CLOUD DATABASE
+        async function syncDataFromTurso() {
+            if (!window.db) return;
+            try {
+                const resAset = await window.db.execute("SELECT * FROM aset_kewpa2 ORDER BY created_at DESC");
+                if (resAset.rows && resAset.rows.length > 0) {
+                    asetDatabase = resAset.rows.map(row => ({
+                        id: row.id,
+                        group: row.group_nama,
+                        noSiri: row.no_siri,
+                        nama: row.nama,
+                        kodNasional: row.kod_nasional || '',
+                        kategori: row.kategori,
+                        subKategori: row.sub_kategori,
+                        lokasi: row.lokasi,
+                        tarikh: row.tarikh,
+                        harga: parseFloat(row.harga) || 0,
+                        status: row.status,
+                        buatan: row.buatan,
+                        casis: row.casis,
+                        lo: row.lo,
+                        jaminan: row.jaminan,
+                        pembekal: row.pembekal,
+                        catatan: row.catatan
+                    }));
+                    saveStorageData();
+                    renderMasterTable();
+                    populateStickerGroupSelect();
+                    populateKEWPA2Select();
+                }
+            } catch (err) {
+                console.log("Menggunakan storan tempatan sementara.", err);
+            }
+        }
 
         function loadStorageData() {
             const stored = localStorage.getItem('eAset_PKG_KEWPA2_Data');
@@ -1123,7 +1198,7 @@
             document.getElementById('container-kuantiti').style.display = isPukal ? 'block' : 'none';
         }
 
-        function handleFormDaftar(e) {
+       async function handleFormDaftar(e) {
             e.preventDefault();
             const mode = document.querySelector('input[name="mod_daftar"]:checked').value;
             const nama = document.getElementById('reg-nama').value.toUpperCase();
@@ -1142,6 +1217,8 @@
             const jaminan = document.getElementById('reg-jaminan').value;
             const pembekal = document.getElementById('reg-pembekal').value;
             const catatan = document.getElementById('reg-catatan').value;
+
+            const newItems = [];
 
             if (mode === 'pukal') {
                 for (let i = 1; i <= kuantiti; i++) {
@@ -1166,8 +1243,8 @@
                         catatan
                     };
                     asetDatabase.push(newAsset);
+                    newItems.push(newAsset);
                 }
-                showToast(`Berjaya mendaftar ${kuantiti} unit aset ke KEW.PA!`, 'success');
             } else {
                 const newAsset = {
                     id: 'AST-' + Date.now(),
@@ -1189,7 +1266,7 @@
                     catatan
                 };
                 asetDatabase.push(newAsset);
-                showToast(`Berjaya mendaftar aset KEW.PA!`, 'success');
+                newItems.push(newAsset);
             }
 
             saveStorageData();
@@ -1197,6 +1274,30 @@
             populateStickerGroupSelect();
             populateKEWPA2Select();
             populateAduanSelect();
+
+            // HANTAR DATA TERUS KE TURSO CLOUD DATABASE
+            if (window.db) {
+                showToast("Mengimport data ke Turso Cloud...", "info");
+                for (const item of newItems) {
+                    try {
+                        await window.db.execute({
+                            sql: `INSERT INTO aset_kewpa2 (id, group_nama, no_siri, nama, kod_nasional, kategori, sub_kategori, lokasi, tarikh, harga, status, buatan, casis, lo, jaminan, pembekal, catatan)
+                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                            args: [
+                                item.id, item.group, item.noSiri, item.nama, item.kodNasional,
+                                item.kategori, item.subKategori, item.lokasi, item.tarikh,
+                                item.harga, item.status, item.buatan, item.casis, item.lo,
+                                item.jaminan, item.pembekal, item.catatan
+                            ]
+                        });
+                    } catch (err) {
+                        console.error("Ralat simpan Turso:", err);
+                    }
+                }
+                showToast("Berjaya disimpan ke Turso Database!", "success");
+            }
+
+            document.getElementById('form-daftar-aset').reset();
             showSection('senarai-aset');
         }
 
@@ -1463,9 +1564,14 @@
             if (found) openModalDetail(found.id);
         }
 
-        function openModalDetail(id) {
+     function openModalDetail(id) {
             selectedAsetForModal = asetDatabase.find(a => a.id === id);
             if (!selectedAsetForModal) return;
+            
+            // Sembunyikan box kemaskini lokasi secara default
+            const boxLokasi = document.getElementById('box-kemaskini-lokasi');
+            if(boxLokasi) boxLokasi.classList.add('hidden');
+
             document.getElementById('modal-nama-aset').innerText = selectedAsetForModal.nama;
             document.getElementById('modal-no-siri').innerText = selectedAsetForModal.noSiri;
             document.getElementById('modal-lokasi').innerText = selectedAsetForModal.lokasi;
@@ -1501,6 +1607,43 @@
             container.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
         }
+
+function paparBoxTukarLokasi() {
+            const box = document.getElementById('box-kemaskini-lokasi');
+            box.classList.toggle('hidden');
+        }
+
+        async function simpanLokasiBaharuTurso() {
+            if (!selectedAsetForModal) return;
+            const lokasiBaharu = document.getElementById('select-lokasi-baharu').value;
+
+            // 1. Kemaskini pembolehubah tempatan
+            selectedAsetForModal.lokasi = lokasiBaharu;
+            const itemInDb = asetDatabase.find(a => a.id === selectedAsetForModal.id);
+            if (itemInDb) itemInDb.lokasi = lokasiBaharu;
+
+            // 2. Simpan ke LocalStorage
+            saveStorageData();
+            renderMasterTable();
+            document.getElementById('modal-lokasi').innerText = lokasiBaharu;
+            document.getElementById('box-kemaskini-lokasi').classList.add('hidden');
+
+            showToast("Lokasi berjaya dikemaskini!", "success");
+
+            // 3. Kemaskini secara Real-Time di Turso Cloud Database
+            if (window.db) {
+                try {
+                    await window.db.execute({
+                        sql: "UPDATE aset_kewpa2 SET lokasi = ? WHERE id = ?",
+                        args: [lokasiBaharu, selectedAsetForModal.id]
+                    });
+                    showToast("Kemaskini lokasi disinkronkan ke Turso Cloud!", "success");
+                } catch (err) {
+                    console.error("Ralat kemaskini lokasi Turso:", err);
+                }
+            }
+        }
+
     </script>
 </body>
 </html>
