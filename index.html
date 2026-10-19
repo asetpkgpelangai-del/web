@@ -965,7 +965,7 @@
         let html5QrCodeScanner = null;
         let selectedAsetForModal = null;
 
-        window.addEventListener('DOMContentLoaded', () => {
+     window.addEventListener('DOMContentLoaded', () => {
             loadStorageData();
             updateDashboardStats();
             renderRecentTable();
@@ -974,6 +974,12 @@
             populateKEWPA2Select();
             populateAduanSelect();
             renderAduanList();
+
+            // BACA SEKSYEN TERAKHIR DARI URL HASH ATAU LOCALSTORAGE BILA REFRESH
+            const savedSection = window.location.hash.replace('#', '') || 
+                                 localStorage.getItem('eAset_active_section') || 
+                                 'dashboard';
+            showSection(savedSection);
         });
 
         function loadStorageData() {
@@ -1062,19 +1068,27 @@
             }
         }
 
-        function showSection(sectionId) {
+     function showSection(sectionId) {
             document.querySelectorAll('main > div > section').forEach(sec => sec.classList.add('hidden'));
             document.querySelectorAll('.nav-item').forEach(nav => {
                 nav.classList.remove('bg-blue-600', 'text-white');
                 nav.classList.add('text-slate-400');
             });
 
-            document.getElementById(`sec-${sectionId}`).classList.remove('hidden');
+            const targetSection = document.getElementById(`sec-${sectionId}`);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+            }
+
             const activeNav = document.getElementById(`nav-${sectionId}`);
             if (activeNav) {
                 activeNav.classList.add('bg-blue-600', 'text-white');
                 activeNav.classList.remove('text-slate-400');
             }
+
+            // SIMPAN STATUS SEKSYEN KE URL HASH & LOCALSTORAGE SUPAYA KEKAL BILA REFRESH
+            window.location.hash = sectionId;
+            localStorage.setItem('eAset_active_section', sectionId);
 
             if (sectionId === 'sticker-qr') renderStickerSheet();
             if (sectionId === 'borang-rasmi') renderKEWPAView();
