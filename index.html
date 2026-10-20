@@ -40,7 +40,7 @@
         }
     </script>
    
- <style>
+<style>
     .font-borang {
         font-family: Arial, Helvetica, sans-serif !important;
     }
@@ -49,7 +49,21 @@
         border: 1px solid black !important;
     }
 
-    /* PERATURAN STRICT PRINTING BERSEPADU */
+    /* TETAPAN AT-PAGE PRINTING UNTUK BROWSER */
+    @page {
+        size: A4 portrait;
+        margin: 8mm;
+    }
+
+    @page landscape-page {
+        size: A4 landscape !important;
+        margin: 5mm !important;
+    }
+
+    body.mode-landscape {
+        page: landscape-page !important;
+    }
+
     @media print {
         * {
             -webkit-print-color-adjust: exact !important;
@@ -63,48 +77,23 @@
             margin: 0 !important;
             padding: 0 !important;
             width: 100% !important;
+            height: auto !important;
+            overflow: visible !important;
         }
         
         .no-print, header, aside, #toast-container, .no-print-zone, .sub-nav-bar {
             display: none !important;
         }
 
-        main, .main-content-area, .max-w-7xl {
+        main, .main-content-area, .max-w-7xl, .print-wrapper {
             padding: 0 !important;
             margin: 0 !important;
             max-width: 100% !important;
             width: 100% !important;
             display: block !important;
-        }
-
-        /* MOD CETAK STICKER: TEPAT 12 STICKER PER MUKA SURAT A4 */
-        body.mode-cetak-sticker #sec-dashboard,
-        body.mode-cetak-sticker #sec-daftar-aset,
-        body.mode-cetak-sticker #sec-senarai-aset,
-        body.mode-cetak-sticker #sec-borang-rasmi,
-        body.mode-cetak-sticker #sec-aduan-rosak {
-            display: none !important;
-        }
-
-        body.mode-cetak-sticker #sec-sticker-qr {
-            display: block !important;
-            padding: 0 !important;
-            margin: 0 !important;
-        }
-
-        /* GRID STICKER KHAS A4 PRINTING (2 LAJUR X 6 BARIS) */
-        body.mode-cetak-sticker #sticker-grid {
-            display: grid !important;
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 4mm !important;
-        }
-
-        body.mode-cetak-sticker .sticker-card-item {
-            height: 41mm !important;
-            max-height: 41mm !important;
-            box-sizing: border-box !important;
-            page-break-inside: avoid !important;
-            break-inside: avoid !important;
+            background: white !important;
+            border: none !important;
+            box-shadow: none !important;
         }
 
         /* MOD CETAK BORANG KEW.PA */
@@ -122,44 +111,46 @@
             margin: 0 !important;
         }
 
-        .print-wrapper {
-            padding: 0 !important;
-            margin: 0 !important;
-            background: white !important;
-            width: 100% !important;
+        /* TETAPAN CONTAINER BORANG PORTRAIT (KEW.PA-3 & KEW.PA-4 TEPAT 1 PAGE) */
+        .print-page-a4 {
+            box-sizing: border-box !important;
+            width: 194mm !important;
+            max-width: 194mm !important;
+            height: auto !important;
+            padding: 2mm 2mm 5mm 2mm !important;
+            margin: 0 auto !important;
+            border: none !important;
+            box-shadow: none !important;
+            page-break-after: avoid !important;
+            break-after: avoid !important;
         }
 
-        /* KELUARKAN GARISAN BORDER LUAR & SHADOW PADA SEMUA BORANG SEMASA CETAK */
-        .print-page-a4, 
+        /* TETAPAN CONTAINER GENERAL */
         #other-kewpa-container-view {
             border: none !important;
             box-shadow: none !important;
             background: white !important;
             padding: 0 !important;
             margin: 0 auto !important;
-            box-sizing: border-box !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+            overflow: visible !important;
+            page-break-after: auto !important;
+            break-after: auto !important;
+        }
+
+        /* KHAS UNTUK MOD LANDSCAPE KEW.PA-8 (PAKSA DIKUNCI EXACT 1 PAGE) */
+        body.mode-landscape #other-kewpa-container-view,
+        body.mode-landscape #kewpa8-wrapper {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
             page-break-after: avoid !important;
             break-after: avoid !important;
             page-break-inside: avoid !important;
-        }
-
-        /* DEFAULT ORIENTASI PORTRAIT UNTUK KEW.PA-3, 4, 5, 6, 7 */
-        @page {
-            size: A4 portrait;
-            margin: 8mm;
-        }
-
-        /* TETAPAN KHAS LANDSKAP UNTUK KEW.PA-8 (CUKUP 1 PAGE TANPA OVERFLOW) */
-        body.mode-landscape @page {
-            size: A4 landscape;
-            margin: 8mm;
-        }
-
-        body.mode-landscape #other-kewpa-container-view {
-            width: 100% !important;
-            max-width: 100% !important;
-            min-height: auto !important;
-            height: auto !important;
+            break-inside: avoid !important;
         }
     }
 
@@ -170,7 +161,6 @@
     ::-webkit-scrollbar-track { background: #f1f5f9; }
     ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 </style>
-
 
 </head>
 <body class="bg-slate-100 font-sans text-slate-800 antialiased min-h-screen flex flex-col md:flex-row">
@@ -865,10 +855,10 @@
 
                     </div>
 
-                    <!-- PLACEHOLDER UNTUK BORANG LAIN (KEW.PA-1, 3, 7, 10) -->
-                    <div id="other-kewpa-container-view" class="hidden bg-white w-[210mm] min-h-[290mm] shadow-2xl rounded text-[11px] p-8 border border-slate-400">
-                        <div id="other-kewpa-content"></div>
-                    </div>
+                <!-- PLACEHOLDER UNTUK BORANG LAIN (KEW.PA-1, 5, 6, 7, 8) -->
+<div id="other-kewpa-container-view" class="hidden bg-white w-full max-w-[280mm] p-6 text-[11px]">
+    <div id="other-kewpa-content"></div>
+</div>
 
                 </div>
             </section>
@@ -1068,25 +1058,26 @@
         let html5QrCodeScanner = null;
         let selectedAsetForModal = null;
 
-        window.addEventListener('DOMContentLoaded', () => {
-            loadStorageData();
-            updateDashboardStats();
-            renderRecentTable();
-            renderMasterTable();
-            populateStickerGroupSelect();
-            populateKEWPA2Select();
-            populateAduanSelect();
-            renderAduanList();
+     window.addEventListener('DOMContentLoaded', () => {
+    loadStorageData();
+    updateDashboardStats();
+    renderRecentTable();
+    renderMasterTable();
+    populateStickerGroupSelect();
+    populateKEWPA2Select();
+    populateAduanSelect();
+    renderAduanList();
 
-            // Tarik data dari Turso Cloud Database secara automatik
-            syncDataFromTurso();
+    // Tarik data dari Turso Cloud Database secara automatik
+    syncDataFromTurso();
 
-            // BACA SEKSYEN TERAKHIR BILA REFRESH
-            const savedSection = window.location.hash.replace('#', '') || 
-                                 sessionStorage.getItem('eAset_active_section') || 
-                                 'dashboard';
-            showSection(savedSection);
-        });
+    // BACA SEKSYEN TERAKHIR BILA REFRESH (GUNAKAN localStorage)
+    const savedSection = window.location.hash.replace('#', '') || 
+                         localStorage.getItem('eAset_active_section') || 
+                         'dashboard';
+    
+    showSection(savedSection);
+});
 
         // FUNGSI SINKRONI DATA DARI TURSO CLOUD DATABASE
         async function syncDataFromTurso() {
@@ -1209,31 +1200,32 @@
             }
         }
 
-     function showSection(sectionId) {
-            document.querySelectorAll('main > div > section').forEach(sec => sec.classList.add('hidden'));
-            document.querySelectorAll('.nav-item').forEach(nav => {
-                nav.classList.remove('bg-blue-600', 'text-white');
-                nav.classList.add('text-slate-400');
-            });
+function showSection(sectionId) {
+    document.querySelectorAll('main > div > section').forEach(sec => sec.classList.add('hidden'));
+    document.querySelectorAll('.nav-item').forEach(nav => {
+        nav.classList.remove('bg-blue-600', 'text-white');
+        nav.classList.add('text-slate-400');
+    });
 
-            const targetSection = document.getElementById(`sec-${sectionId}`);
-            if (targetSection) {
-                targetSection.classList.remove('hidden');
-            }
+    const targetSection = document.getElementById(`sec-${sectionId}`);
+    if (targetSection) {
+        targetSection.classList.remove('hidden');
+    }
 
-            const activeNav = document.getElementById(`nav-${sectionId}`);
-            if (activeNav) {
-                activeNav.classList.add('bg-blue-600', 'text-white');
-                activeNav.classList.remove('text-slate-400');
-            }
+    const activeNav = document.getElementById(`nav-${sectionId}`);
+    if (activeNav) {
+        activeNav.classList.add('bg-blue-600', 'text-white');
+        activeNav.classList.remove('text-slate-400');
+    }
 
-            // SIMPAN STATUS SEKSYEN KE URL HASH & LOCALSTORAGE SUPAYA KEKAL BILA REFRESH
-            window.location.hash = sectionId;
-            localStorage.setItem('eAset_active_section', sectionId);
+    // SIMPAN STATUS SEKSYEN KE URL HASH & LOCALSTORAGE
+    window.location.hash = sectionId;
+    localStorage.setItem('eAset_active_section', sectionId);
 
-            if (sectionId === 'sticker-qr') renderStickerSheet();
-            if (sectionId === 'borang-rasmi') renderKEWPAView();
-        }
+    if (sectionId === 'sticker-qr') renderStickerSheet();
+    // TUKAR renderKEWPAView() KEPADA handleBorangTypeChange()
+    if (sectionId === 'borang-rasmi') handleBorangTypeChange();
+}
 
         function updateDashboardStats() {
             document.getElementById('stat-total-aset').innerText = asetDatabase.length;
@@ -1490,8 +1482,8 @@ function handleBorangTypeChange() {
     const otherView = document.getElementById('other-kewpa-container-view');
     const otherContent = document.getElementById('other-kewpa-content');
 
-    // TUKAR MOD CETAKAN UNTUK KEW.PA-8 KEPADA LANDSKAP AUTOMATIK
-    if (type === 'KEW.PA-8') {
+    // HANYA KEW.PA-1 SAHAJA MENGGUNAKAN MOD LANDSKAP AUTOMATIK
+    if (type === 'KEW.PA-1') {
         document.body.classList.add('mode-landscape');
     } else {
         document.body.classList.remove('mode-landscape');
@@ -1500,14 +1492,22 @@ function handleBorangTypeChange() {
     // TAPIS SENARAI UNIT ASET UNTUK DROPDOWN
     populateKEWPA2Select();
 
-    // 1. JIKA PILIH KEW.PA-3 ATAU KEW.PA-4
-    if (type === 'KEW.PA-3' || type === 'KEW.PA-4') {
+    // 1. JIKA PILIH KEW.PA-1 (LANDSKAP)
+    if (type === 'KEW.PA-1') {
+        kewpaView.classList.add('hidden');
+        kewpaBtns.classList.add('hidden');
+        otherView.classList.remove('hidden');
+
+        renderKEWPA1View();
+    }
+    // 2. JIKA PILIH KEW.PA-3 ATAU KEW.PA-4
+    else if (type === 'KEW.PA-3' || type === 'KEW.PA-4') {
         kewpaView.classList.remove('hidden');
         kewpaBtns.classList.remove('hidden');
         otherView.classList.add('hidden');
         renderKEWPAView();
     } 
-    // 2. JIKA PILIH KEW.PA-5 ATAU KEW.PA-6
+    // 3. JIKA PILIH KEW.PA-5 ATAU KEW.PA-6 (SOKONGAN BERBILANG MUKA SURAT / MULTI-PAGE)
     else if (type === 'KEW.PA-5' || type === 'KEW.PA-6') {
         kewpaView.classList.add('hidden');
         kewpaBtns.classList.add('hidden');
@@ -1531,7 +1531,7 @@ function handleBorangTypeChange() {
             senaraiAset.forEach((item, idx) => {
                 jumlahHargaAsal += parseFloat(item.harga) || 0;
                 rowsHtml += `
-                    <tr>
+                    <tr class="page-break-inside-avoid">
                         <td class="p-1.5 text-center">${idx + 1}</td>
                         <td class="p-1.5 font-mono font-bold text-center">${item.noSiri}</td>
                         <td class="p-1.5 text-left">${item.nama}</td>
@@ -1572,7 +1572,7 @@ function handleBorangTypeChange() {
                     <tbody>
                         ${rowsHtml}
                     </tbody>
-                    <tfoot>
+                    <tfoot class="page-break-inside-avoid">
                         <tr class="font-bold">
                             <td colspan="5" class="p-1.5 text-right uppercase">JUMLAH</td>
                             <td class="p-1.5 text-right font-mono">${jumlahHargaAsal.toFixed(2)}</td>
@@ -1588,13 +1588,13 @@ function handleBorangTypeChange() {
                     </tfoot>
                 </table>
 
-                <div class="text-[8.5px] mt-3 leading-tight italic">
+                <div class="text-[8.5px] mt-3 leading-tight italic page-break-inside-avoid">
                     *NOTA: Laporan ini melaporkan kedudukan keseluruhan Aset Alih yang dipegang oleh agensi merangkumi penerimaan serta maklumat pindahan, pelupusan dan hapus kira yang telah dikemaskini.
                 </div>
             </div>
         `;
     } 
-    // 3. JIKA PILIH KEW.PA-7 (SENARAI ASET MENGIKUT LOKASI)
+    // 4. JIKA PILIH KEW.PA-7
     else if (type === 'KEW.PA-7') {
         kewpaView.classList.add('hidden');
         kewpaBtns.classList.add('hidden');
@@ -1602,7 +1602,7 @@ function handleBorangTypeChange() {
 
         renderKEWPA7View();
     }
-    // 4. JIKA PILIH KEW.PA-8 (LAPORAN KEDUDUKAN SEMASA ASET ALIH)
+    // 5. JIKA PILIH KEW.PA-8
     else if (type === 'KEW.PA-8') {
         kewpaView.classList.add('hidden');
         kewpaBtns.classList.add('hidden');
@@ -1610,7 +1610,7 @@ function handleBorangTypeChange() {
 
         renderKEWPA8View();
     }
-    // 5. UNTUK BORANG-BORANG LAIN
+    // 6. UNTUK BORANG-BORANG LAIN
     else {
         kewpaView.classList.add('hidden');
         kewpaBtns.classList.add('hidden');
@@ -1625,15 +1625,13 @@ function handleBorangTypeChange() {
     }
 }
 
-// FUNGSI KHAS PENJANAAN BORANG KEW.PA-7 MENGIKUT LOKASI
+// FUNGSI KHAS KEW.PA-7 DENGAN SOKONGAN BERBILANG MUKA SURAT (MULTI-PAGE)
 function renderKEWPA7View(selectedLokasi = null) {
     const otherContent = document.getElementById('other-kewpa-content');
     
-    // Dapatkan senarai semua lokasi unik
     const senaraiLokasi = [...new Set(asetDatabase.map(a => a.lokasi))];
     const lokasiAktif = selectedLokasi || senaraiLokasi[0] || 'Studio COE / Makmal Robotik';
 
-    // Tapis aset mengikut lokasi dipilih
     const asetDiLokasi = asetDatabase.filter(a => a.lokasi === lokasiAktif);
 
     let rowsHtml = '';
@@ -1642,7 +1640,7 @@ function renderKEWPA7View(selectedLokasi = null) {
     } else {
         asetDiLokasi.forEach((item, idx) => {
             rowsHtml += `
-                <tr>
+                <tr class="page-break-inside-avoid">
                     <td class="p-1.5 text-center w-[8%]">${idx + 1}</td>
                     <td class="p-1.5 font-mono font-bold text-center w-[30%]">${item.noSiri}</td>
                     <td class="p-1.5 text-left w-[47%]">${item.nama}</td>
@@ -1652,7 +1650,6 @@ function renderKEWPA7View(selectedLokasi = null) {
         });
     }
 
-    // Bina dropdown lokasi pilihan untuk paparan
     let optionsLokasi = senaraiLokasi.map(lok => 
         `<option value="${lok}" ${lok === lokasiAktif ? 'selected' : ''}>${lok}</option>`
     ).join('');
@@ -1694,8 +1691,8 @@ function renderKEWPA7View(selectedLokasi = null) {
                 </tbody>
             </table>
 
-            <!-- BAHAGIAN TANDATANGAN (a) & (b) -->
-            <div class="grid grid-cols-2 gap-8 text-[10px] mb-6 pt-2">
+            <!-- BAHAGIAN TANDATANGAN (a) & (b) DIPETAKKAN SUPAYA TIDAK TERPOTONG -->
+            <div class="grid grid-cols-2 gap-8 text-[10px] mb-6 pt-2 page-break-inside-avoid">
                 <div>
                     <p class="font-semibold mb-8">(a) Disediakan oleh:</p>
                     <div class="border-b border-dotted border-black w-3/4 mb-1"></div>
@@ -1714,7 +1711,7 @@ function renderKEWPA7View(selectedLokasi = null) {
                 </div>
             </div>
 
-            <div class="border-t border-black pt-2 text-[8px] leading-tight space-y-0.5">
+            <div class="border-t border-black pt-2 text-[8px] leading-tight space-y-0.5 page-break-inside-avoid">
                 <p><span class="font-bold">Nota:</span> a) Disediakan oleh Pegawai Aset atau wakilnya (contoh: Pembantu Tadbir Aset/lain-lain jawatan)</p>
                 <p class="pl-6">b) Pegawai yang mengesahkan ialah pegawai yang bertanggungjawab ke atas Aset Alih berkenaan. Contohnya:-</p>
                 <p class="pl-9">i) Lokasi bilik Setiausaha Bahagian - disahkan oleh Setiausaha Bahagian.</p>
@@ -1725,38 +1722,35 @@ function renderKEWPA7View(selectedLokasi = null) {
     `;
 }
 
-// FUNGSI KHAS PENJANAAN BORANG KEW.PA-8 (LAPORAN KEDUDUKAN SEMASA ASET ALIH)
+// FUNGSI KEW.PA-8 PORTRAIT (KEMAS & FIT TEPAT 1 MUKA SURAT A4 PORTRAIT)
 function renderKEWPA8View() {
     const otherContent = document.getElementById('other-kewpa-content');
     const tahunSemasa = new Date().getFullYear();
 
-    // 1. KIRAAN HARTA MODAL (>= RM2,000)
     const hartaModalList = asetDatabase.filter(a => a.harga >= 2000);
     const kuantitiHM = hartaModalList.length;
     const nilaiPerolehanHM = hartaModalList.reduce((sum, a) => sum + (parseFloat(a.harga) || 0), 0);
 
-    // 2. KIRAAN ASET ALIH BERNILAI RENDAH (< RM2,000)
     const asetRendahList = asetDatabase.filter(a => a.harga < 2000);
     const kuantitiABR = asetRendahList.length;
     const nilaiPerolehanABR = asetRendahList.reduce((sum, a) => sum + (parseFloat(a.harga) || 0), 0);
 
-    // 3. JUMLAH KESELURUHAN
     const totalKuantiti = kuantitiHM + kuantitiABR;
     const totalNilaiPerolehan = nilaiPerolehanHM + nilaiPerolehanABR;
 
     otherContent.innerHTML = `
-        <div class="font-borang text-black">
+        <div class="font-borang text-black p-2">
             <div class="flex justify-between items-start text-[9px] mb-1">
                 <div>Pekeliling Perbendaharaan Malaysia</div>
                 <div class="text-right">AM 2.3 Lampiran F</div>
             </div>
-            <div class="text-right font-bold text-xs mb-3">KEW.PA-8</div>
+            <div class="text-right font-bold text-xs mb-1">KEW.PA-8</div>
             <div class="text-center font-bold text-sm uppercase mb-6 tracking-wider">
                 LAPORAN KEDUDUKAN SEMASA ASET ALIH<br>
                 TAHUN ${tahunSemasa}
             </div>
 
-            <table class="w-full tbl-border text-[9.5px] border-collapse mb-4 text-center">
+            <table class="w-full tbl-border text-[9px] border-collapse mb-4 text-center">
                 <thead>
                     <tr class="bg-gray-200 font-bold">
                         <th class="p-2 w-[22%]" rowspan="2">KEMENTERIAN/ JABATAN</th>
@@ -1765,29 +1759,29 @@ function renderKEWPA8View() {
                         <th class="p-2 w-[26%]" colspan="3">JUMLAH KESELURUHAN ASET ALIH</th>
                     </tr>
                     <tr class="bg-gray-200 font-bold">
-                        <th class="p-1.5 w-[8%]">Kuantiti</th>
-                        <th class="p-1.5 w-[9%]">Nilai Perolehan Asal (RM)</th>
-                        <th class="p-1.5 w-[9%]">Nilai Semasa (RM)</th>
-                        <th class="p-1.5 w-[8%]">Kuantiti</th>
-                        <th class="p-1.5 w-[9%]">Nilai Perolehan Asal (RM)</th>
-                        <th class="p-1.5 w-[9%]">Nilai Semasa (RM)</th>
-                        <th class="p-1.5 w-[8%]">Kuantiti</th>
-                        <th class="p-1.5 w-[9%]">Nilai Perolehan Asal (RM)</th>
-                        <th class="p-1.5 w-[9%]">Nilai Semasa (RM)</th>
+                        <th class="p-1 w-[8%]">Kuantiti</th>
+                        <th class="p-1 w-[9%]">Nilai Perolehan Asal (RM)</th>
+                        <th class="p-1 w-[9%]">Nilai Semasa (RM)</th>
+                        <th class="p-1 w-[8%]">Kuantiti</th>
+                        <th class="p-1 w-[9%]">Nilai Perolehan Asal (RM)</th>
+                        <th class="p-1 w-[9%]">Nilai Semasa (RM)</th>
+                        <th class="p-1 w-[8%]">Kuantiti</th>
+                        <th class="p-1 w-[9%]">Nilai Perolehan Asal (RM)</th>
+                        <th class="p-1 w-[9%]">Nilai Semasa (RM)</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="p-2 font-bold text-left">PKG Pelangai (KPM)</td>
-                        <td class="p-2 font-mono">${kuantitiHM}</td>
-                        <td class="p-2 font-mono">${nilaiPerolehanHM.toFixed(2)}</td>
-                        <td class="p-2 font-mono">-</td>
-                        <td class="p-2 font-mono">${kuantitiABR}</td>
-                        <td class="p-2 font-mono">${nilaiPerolehanABR.toFixed(2)}</td>
-                        <td class="p-2 font-mono">-</td>
-                        <td class="p-2 font-mono font-bold">${totalKuantiti}</td>
-                        <td class="p-2 font-mono font-bold">${totalNilaiPerolehan.toFixed(2)}</td>
-                        <td class="p-2 font-mono font-bold">-</td>
+                    <tr class="h-8">
+                        <td class="p-1.5 font-bold text-left">PKG Pelangai (KPM)</td>
+                        <td class="p-1.5 font-mono">${kuantitiHM}</td>
+                        <td class="p-1.5 font-mono">${nilaiPerolehanHM.toFixed(2)}</td>
+                        <td class="p-1.5 font-mono">-</td>
+                        <td class="p-1.5 font-mono">${kuantitiABR}</td>
+                        <td class="p-1.5 font-mono">${nilaiPerolehanABR.toFixed(2)}</td>
+                        <td class="p-1.5 font-mono">-</td>
+                        <td class="p-1.5 font-mono font-bold">${totalKuantiti}</td>
+                        <td class="p-1.5 font-mono font-bold">${totalNilaiPerolehan.toFixed(2)}</td>
+                        <td class="p-1.5 font-mono font-bold">-</td>
                     </tr>
                     <tr class="h-6"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                     <tr class="h-6"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -1795,27 +1789,152 @@ function renderKEWPA8View() {
                     <tr class="h-6"><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                 </tbody>
                 <tfoot>
-                    <tr class="font-bold bg-gray-100">
-                        <td class="p-2 text-left uppercase">JUMLAH KESELURUHAN</td>
-                        <td class="p-2 font-mono">${kuantitiHM}</td>
-                        <td class="p-2 font-mono">${nilaiPerolehanHM.toFixed(2)}</td>
-                        <td class="p-2 font-mono">-</td>
-                        <td class="p-2 font-mono">${kuantitiABR}</td>
-                        <td class="p-2 font-mono">${nilaiPerolehanABR.toFixed(2)}</td>
-                        <td class="p-2 font-mono">-</td>
-                        <td class="p-2 font-mono">${totalKuantiti}</td>
-                        <td class="p-2 font-mono">${totalNilaiPerolehan.toFixed(2)}</td>
-                        <td class="p-2 font-mono">-</td>
+                    <tr class="font-bold bg-gray-100 h-8">
+                        <td class="p-1.5 text-left uppercase">JUMLAH KESELURUHAN</td>
+                        <td class="p-1.5 font-mono">${kuantitiHM}</td>
+                        <td class="p-1.5 font-mono">${nilaiPerolehanHM.toFixed(2)}</td>
+                        <td class="p-1.5 font-mono">-</td>
+                        <td class="p-1.5 font-mono">${kuantitiABR}</td>
+                        <td class="p-1.5 font-mono">${nilaiPerolehanABR.toFixed(2)}</td>
+                        <td class="p-1.5 font-mono">-</td>
+                        <td class="p-1.5 font-mono">${totalKuantiti}</td>
+                        <td class="p-1.5 font-mono">${totalNilaiPerolehan.toFixed(2)}</td>
+                        <td class="p-1.5 font-mono">-</td>
                     </tr>
                 </tfoot>
             </table>
 
-            <div class="text-[8.5px] mt-4 leading-tight italic">
+            <div class="text-[8.5px] mt-3 leading-tight italic">
                 NOTA: Laporan ini melaporkan kedudukan keseluruhan Aset Alih yang dipegang oleh agensi merangkumi penerimaan serta maklumat pindahan, pelupusan dan hapus kira yang telah dikemaskini.
             </div>
         </div>
     `;
 }
+
+function renderKEWPA1View() {
+    const otherContent = document.getElementById('other-kewpa-content');
+    
+    const sample = asetDatabase[0] || {};
+    const pembekalText = sample.pembekal || 'EduTech STEM Supplies Sdn Bhd, Kuantan';
+    const loNo = sample.lo || 'LO/KPM/2023/0891';
+    const tarikhTerima = sample.tarikh ? formatTarikhDDMMYYYY(sample.tarikh) : '-';
+
+    const groups = [...new Set(asetDatabase.map(a => a.group))];
+    let rowsHtml = '';
+
+    if (groups.length === 0) {
+        rowsHtml = `
+            <tr class="h-8"><td class="p-1"></td><td class="p-1"></td><td class="p-1"></td><td class="p-1"></td><td class="p-1"></td><td class="p-1"></td></tr>
+            <tr class="h-8"><td class="p-1"></td><td class="p-1"></td><td class="p-1"></td><td class="p-1"></td><td class="p-1"></td><td class="p-1"></td></tr>
+        `;
+    } else {
+        groups.forEach((grp, idx) => {
+            const items = asetDatabase.filter(a => a.group === grp);
+            const count = items.length;
+            const code = items[0]?.kodNasional || '-';
+
+            rowsHtml += `
+                <tr class="h-7 text-center">
+                    <td class="p-1 font-mono">${code}</td>
+                    <td class="p-1 text-left font-semibold">${grp}</td>
+                    <td class="p-1 font-mono">${count}</td>
+                    <td class="p-1 font-mono">${count}</td>
+                    <td class="p-1 font-mono">${count}</td>
+                    <td class="p-1 text-left text-[9px]">Diterima dalam keadaan baik dan lengkap.</td>
+                </tr>
+            `;
+        });
+    }
+
+    otherContent.innerHTML = `
+        <div class="font-borang text-black p-1">
+            <div class="flex justify-between items-start text-[9px] mb-1">
+                <div>Pekeliling Perbendaharaan Malaysia</div>
+                <div class="text-right">AM 2.2 Lampiran A</div>
+            </div>
+            <div class="text-right font-bold text-xs mb-1">KEW.PA-1</div>
+            <div class="text-right text-[10px] mb-2">
+                No. Rujukan: <span class="border-b border-black inline-block min-w-[180px] text-center font-mono">PKGPLG/RECEIPT/${new Date().getFullYear()}</span>
+            </div>
+
+            <div class="text-center font-bold text-sm uppercase mb-3 tracking-wider">
+                BORANG PENERIMAAN ASET ALIH
+            </div>
+
+            <!-- JADUAL MAKLUMAT PEMBEKAL & DOKUMEN -->
+            <table class="w-full tbl-border text-[9.5px] border-collapse mb-3">
+                <thead>
+                    <tr class="bg-gray-200 font-bold text-center">
+                        <th class="p-1.5 w-[22%]" rowspan="2">Nama dan Alamat Pembekal/<br>Agen Penghantaran/ Pemberi</th>
+                        <th class="p-1.5 w-[14%]" rowspan="2">Jenis Penerimaan</th>
+                        <th class="p-1.5 w-[28%]" colspan="2">Pesanan Kerajaan (PK)/ Kontrak/<br>Surat Kelulusan</th>
+                        <th class="p-1.5 w-[22%]" colspan="2">Nota Hantaran (DO)</th>
+                        <th class="p-1.5 w-[14%]" rowspan="2">Maklumat Pengangkutan</th>
+                    </tr>
+                    <tr class="bg-gray-200 font-bold text-center">
+                        <th class="p-1 w-[16%]">Nombor Rujukan</th>
+                        <th class="p-1 w-[12%]">Tarikh</th>
+                        <th class="p-1 w-[12%]">Nombor Rujukan</th>
+                        <th class="p-1 w-[10%]">Tarikh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center">
+                        <td class="p-1.5 text-left leading-tight text-[9px]">${pembekalText}</td>
+                        <td class="p-1.5">Pembelian LO Kerajaan</td>
+                        <td class="p-1.5 font-mono">${loNo}</td>
+                        <td class="p-1.5">${tarikhTerima}</td>
+                        <td class="p-1.5 font-mono">DO-2023-8821</td>
+                        <td class="p-1.5">${tarikhTerima}</td>
+                        <td class="p-1.5 text-[9px]">Pengangkutan Pembekal</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- JADUAL PERIHAL ASET & KUANTITI -->
+            <table class="w-full tbl-border text-[9.5px] border-collapse mb-4">
+                <thead>
+                    <tr class="bg-gray-200 font-bold text-center">
+                        <th class="p-1.5 w-[14%]" rowspan="2">No. Kod</th>
+                        <th class="p-1.5 w-[36%]" rowspan="2">Keterangan Aset Alih</th>
+                        <th class="p-1.5 w-[28%]" colspan="3">Kuantiti</th>
+                        <th class="p-1.5 w-[22%]" rowspan="2">Catatan</th>
+                    </tr>
+                    <tr class="bg-gray-200 font-bold text-center">
+                        <th class="p-1 w-[9%]">Dipesan (PK)</th>
+                        <th class="p-1 w-[10%]">Nota Hantaran (DO)</th>
+                        <th class="p-1 w-[9%]">Diterima</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${rowsHtml}
+                </tbody>
+            </table>
+
+            <!-- RUANGAN TANDATANGAN PEGAWAI (KEMASKINI DENGAN BOX BORDER KEMAS) -->
+            <div class="grid grid-cols-2 gap-4 tbl-border p-2.5 text-[9px] leading-relaxed">
+                <div>
+                    <div class="border-b border-dotted border-black w-3/4 mb-1 h-6"></div>
+                    <p class="font-semibold">(Tandatangan Pegawai Penerima)</p>
+                    <p class="mt-1">Nama: <span class="border-b border-black inline-block w-48 font-bold">Ahmad Bin Zulkifli</span></p>
+                    <p class="mt-0.5">Jawatan: <span class="border-b border-black inline-block w-44">Pegawai Aset PKG</span></p>
+                    <p class="mt-0.5">Jabatan: <span class="border-b border-black inline-block w-44">PKG Pelangai</span></p>
+                    <p class="mt-0.5">Tarikh: <span class="border-b border-black inline-block w-48">${tarikhTerima}</span></p>
+                </div>
+                <div>
+                    <div class="border-b border-dotted border-black w-3/4 mb-1 h-6"></div>
+                    <p class="font-semibold">(*Tandatangan Pegawai Teknikal)</p>
+                    <p class="mt-1">Nama: <span class="border-b border-black inline-block w-48"></span></p>
+                    <p class="mt-0.5">Jawatan: <span class="border-b border-black inline-block w-44"></span></p>
+                    <p class="mt-0.5">Jabatan: <span class="border-b border-black inline-block w-44"></span></p>
+                    <p class="mt-0.5">Tarikh: <span class="border-b border-black inline-block w-48"></span></p>
+                    <p class="text-[7.5px] italic mt-0.5 text-slate-600">* Jika Perlu.</p>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
         function switchKEWPA2Part(part) {
             currentKEWPA2Part = part;
             const btnA = document.getElementById('btn-part-a');
