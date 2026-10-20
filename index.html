@@ -506,13 +506,16 @@
                     <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto">
                         <div>
                             <label class="text-xs font-bold uppercase text-slate-600 block mb-1">Pilih Jenis Borang:</label>
-                            <select id="select-jenis-kewpa" onchange="handleBorangTypeChange()" class="p-2 text-xs font-bold border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-slate-50">
-                                <option value="KEW.PA-2">KEW.PA-2 (Daftar Harta Modal)</option>
-                                <option value="KEW.PA-1">KEW.PA-1 (Borang Penerimaan Aset)</option>
-                                <option value="KEW.PA-3">KEW.PA-3 (Daftar Inventori)</option>
-                                <option value="KEW.PA-7">KEW.PA-7 (Senarai Lokasi)</option>
-                                <option value="KEW.PA-10">KEW.PA-10 (Laporan Kerosakan)</option>
-                            </select>
+                           <select id="select-jenis-kewpa" onchange="handleBorangTypeChange()" class="p-2 text-xs font-bold border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none bg-slate-50">
+    <option value="KEW.PA-3">KEW.PA-3 (Daftar Harta Modal)</option>
+    <option value="KEW.PA-1">KEW.PA-1 (Borang Penerimaan Aset Alih)</option>
+    <option value="KEW.PA-2">KEW.PA-2 (Borang Penolakan Aset Alih)</option>
+    <option value="KEW.PA-4">KEW.PA-4 (Daftar Aset Alih Bernilai Rendah)</option>
+    <option value="KEW.PA-5">KEW.PA-5 (Senarai Daftar Harta Modal)</option>
+    <option value="KEW.PA-6">KEW.PA-6 (Senarai Aset Alih Bernilai Rendah)</option>
+    <option value="KEW.PA-7">KEW.PA-7 (Senarai Lokasi)</option>
+    <option value="KEW.PA-10">KEW.PA-10 (Laporan Kerosakan Aset)</option>
+</select>
                         </div>
 
                         <div>
@@ -521,7 +524,7 @@
                         </div>
                     </div>
 
-                    <!-- Butang Sub-Pilihan Bahagian Khas Bagi KEW.PA-2 -->
+                    <!-- Butang Sub-Pilihan Bahagian Khas Bagi KEW.PA-3 -->
                     <div id="kewpa2-sub-buttons" class="flex items-center gap-2 border-l border-slate-200 pl-4">
                         <button onclick="switchKEWPA2Part('A')" id="btn-part-a" class="px-4 py-2 rounded-lg text-xs font-bold bg-blue-600 text-white shadow-sm transition-all flex items-center gap-1">
                             <i class="fa-solid fa-file-lines"></i> Papar Bahagian A
@@ -539,14 +542,14 @@
                 <!-- Printable Document Viewer Container -->
                 <div class="bg-slate-200 p-2 md:p-6 rounded-xl flex justify-center overflow-x-auto print-wrapper">
                     
-                    <!-- ================= CONTAINER PAPARAN BORANG KEW.PA-2 ================= -->
+                    <!-- ================= CONTAINER PAPARAN BORANG KEW.PA-3 ================= -->
                     <div id="kewpa2-container-view" class="w-full flex justify-center">
                         
                         <!-- BAHAGIAN A DISPLAY -->
                         <div id="view-part-a" class="print-page-a4 font-borang bg-white w-[210mm] shadow-2xl rounded text-[10.5px] leading-tight text-black border border-slate-400 p-[10mm] flex flex-col justify-between">
                             <div>
                                 <div class="relative mb-3">
-                                    <div class="text-right font-bold text-xs">KEW.PA-2</div>
+                                    <div class="text-right font-bold text-xs">KEW.PA-3</div>
                                     <div class="text-center font-bold text-xs leading-snug">
                                         (No. Siri Pendaftaran: <span id="kewpa2-nosiri" class="font-normal font-mono"></span> )
                                     </div>
@@ -721,7 +724,48 @@
                                         </tbody>
                                     </table>
                                 </div>
-
+				
+				<!-- TAMBAH JADUAL USIA GUNA DAN NILAI SEMASA DI BAWAH PEMERIKSAAN -->
+<div class="mb-3">
+    <table class="w-full tbl-border border-collapse text-center">
+        <thead>
+            <tr class="bg-gray-300 font-bold">
+                <td class="p-1 uppercase" colspan="5">USIA GUNA DAN NILAI SEMASA</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="p-1 font-semibold bg-gray-100 text-left w-[20%]">Tarikh</td>
+                <td class="p-1 w-[20%]"></td>
+                <td class="p-1 w-[20%]"></td>
+                <td class="p-1 w-[20%]"></td>
+                <td class="p-1 w-[20%]"></td>
+            </tr>
+            <tr>
+                <td class="p-1 font-semibold bg-gray-100 text-left">Usia Guna</td>
+                <td class="p-1"></td>
+                <td class="p-1"></td>
+                <td class="p-1"></td>
+                <td class="p-1"></td>
+            </tr>
+            <tr>
+                <td class="p-1 font-semibold bg-gray-100 text-left">Nilai Semasa (RM)</td>
+                <td class="p-1"></td>
+                <td class="p-1"></td>
+                <td class="p-1"></td>
+                <td class="p-1"></td>
+            </tr>
+            <tr>
+                <td class="p-1 font-semibold bg-gray-100 text-left">Nama Pegawai</td>
+                <td class="p-1"></td>
+                <td class="p-1"></td>
+                <td class="p-1"></td>
+                <td class="p-1"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+				
                                 <!-- PELUPUSAN / HAPUS KIRA -->
                                 <div>
                                     <table class="w-full tbl-border border-collapse text-center">
@@ -753,7 +797,7 @@
                         <div id="view-part-b" class="hidden print-page-a4 font-borang bg-white w-[210mm] min-h-[290mm] shadow-2xl rounded text-[10px] leading-tight text-slate-900 border border-slate-400 p-[10mm] flex flex-col justify-between">
                             <div>
                                 <div class="text-right font-bold text-xs mb-3">
-                                    KEW.PA-2
+                                    KEW.PA-3
                                 </div>
 
                                 <div class="text-center font-bold text-xs leading-relaxed uppercase tracking-wide mb-4">
@@ -774,7 +818,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="h-8"><td class="p-0.5">1</td><td class="p-0.5">12/08/2024</td><td class="p-0.5 text-left">Penambahan Modul Bateri Kapasiti Tinggi 5000mAh</td><td class="p-0.5">6 Bulan</td><td class="p-0.5 font-mono">150.00</td><td class="p-0.5"></td></tr>
+                                       	<tr class="h-8"><td class="p-0.5">1</td><td class="p-0.5"></td><td class="p-0.5"></td><td class="p-0.5"></td><td class="p-0.5"></td><td class="p-0.5"></td></tr>
                                         <tr class="h-8"><td class="p-0.5">2</td><td class="p-0.5"></td><td class="p-0.5"></td><td class="p-0.5"></td><td class="p-0.5"></td><td class="p-0.5"></td></tr>
                                         <tr class="h-8"><td class="p-0.5">3</td><td class="p-0.5"></td><td class="p-0.5"></td><td class="p-0.5"></td><td class="p-0.5"></td><td class="p-0.5"></td></tr>
                                         <tr class="h-8"><td class="p-0.5">4</td><td class="p-0.5"></td><td class="p-0.5"></td><td class="p-0.5"></td><td class="p-0.5"></td><td class="p-0.5"></td></tr>
@@ -1391,61 +1435,83 @@
             });
         }
 
-        function populateKEWPA2Select() {
-            const select = document.getElementById('select-kewpa2-unit');
-            select.innerHTML = '';
-            asetDatabase.forEach(item => {
-                select.innerHTML += `<option value="${item.id}">${item.noSiri} - ${item.nama}</option>`;
-            });
-        }
+      function populateKEWPA2Select() {
+    const selectedJenis = document.getElementById('select-jenis-kewpa').value;
+    const select = document.getElementById('select-kewpa2-unit');
+    select.innerHTML = '';
 
-        function handleBorangTypeChange() {
-            const type = document.getElementById('select-jenis-kewpa').value;
-            const kewpa2View = document.getElementById('kewpa2-container-view');
-            const kewpa2Btns = document.getElementById('kewpa2-sub-buttons');
-            const otherView = document.getElementById('other-kewpa-container-view');
-            const otherContent = document.getElementById('other-kewpa-content');
+    // PENAPIS AUTOMATIK BERDASARKAN NILAI AMARAN PEKELILING
+    let filteredAset = asetDatabase;
 
-            if (type === 'KEW.PA-2') {
-                kewpa2View.classList.remove('hidden');
-                kewpa2Btns.classList.remove('hidden');
-                otherView.classList.add('hidden');
-                renderKEWPAView();
-            } else {
-                kewpa2View.classList.add('hidden');
-                kewpa2Btns.classList.add('hidden');
-                otherView.classList.remove('hidden');
-                
-                otherContent.innerHTML = `
-                    <div class="text-center font-bold text-sm uppercase mb-4 border-b pb-2 font-borang">
-                        DAFTAR RASMI ${type} - KEMENTERIAN PENDIDIKAN MALAYSIA
-                    </div>
-                    <p class="text-xs text-slate-500 mb-4 text-center">Rekod diselaraskan secara automatik dari pangkalan data utama e-ASET PKG Pelangai.</p>
-                    <table class="w-full tbl-border text-center text-xs font-borang">
-                        <thead>
-                            <tr class="bg-gray-200 font-bold">
-                                <td class="p-2">Bil</td>
-                                <td class="p-2">No. Siri Pendaftaran</td>
-                                <td class="p-2">Keterangan / Nama Aset</td>
-                                <td class="p-2">Lokasi Penempatan</td>
-                                <td class="p-2">Status</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            ${asetDatabase.map((a, idx) => `
-                                <tr>
-                                    <td class="p-1.5">${idx+1}</td>
-                                    <td class="p-1.5 font-mono font-bold text-blue-900">${a.noSiri}</td>
-                                    <td class="p-1.5 text-left">${a.nama}</td>
-                                    <td class="p-1.5">${a.lokasi}</td>
-                                    <td class="p-1.5 font-bold">${a.status}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-            }
-        }
+    if (selectedJenis === 'KEW.PA-3') {
+        // Harta Modal: Harga RM2,000 dan ke atas
+        filteredAset = asetDatabase.filter(a => a.harga >= 2000);
+    } else if (selectedJenis === 'KEW.PA-4') {
+        // Aset Bernilai Rendah: Harga kurang dari RM2,000
+        filteredAset = asetDatabase.filter(a => a.harga < 2000);
+    }
+
+    if (filteredAset.length === 0) {
+        select.innerHTML = `<option value="">-- Tiada Aset Dalam Kategori Ini --</option>`;
+        return;
+    }
+
+    filteredAset.forEach(item => {
+        select.innerHTML += `<option value="${item.id}">${item.noSiri} - ${item.nama} (RM ${item.harga.toFixed(2)})</option>`;
+    });
+}
+
+    function handleBorangTypeChange() {
+    const type = document.getElementById('select-jenis-kewpa').value;
+    const kewpaView = document.getElementById('kewpa2-container-view');
+    const kewpaBtns = document.getElementById('kewpa2-sub-buttons');
+    const otherView = document.getElementById('other-kewpa-container-view');
+    const otherContent = document.getElementById('other-kewpa-content');
+
+    // TAPIS SENARAI UNIT ASET MENGIKUT JULAT HARGA BORANG TERLEBIH DAHULU
+    populateKEWPA2Select();
+
+    // BENARKAN KEDUA-DUA KEW.PA-3 DAN KEW.PA-4 MENGGUNAKAN TEMPLATE BORANG UTAMA
+    if (type === 'KEW.PA-3' || type === 'KEW.PA-4') {
+        kewpaView.classList.remove('hidden');
+        kewpaBtns.classList.remove('hidden');
+        otherView.classList.add('hidden');
+        renderKEWPAView(); // Kemaskini kandungan mengikut pilihan borang
+    } else {
+        kewpaView.classList.add('hidden');
+        kewpaBtns.classList.add('hidden');
+        otherView.classList.remove('hidden');
+        
+        otherContent.innerHTML = `
+            <div class="text-center font-bold text-sm uppercase mb-4 border-b pb-2 font-borang">
+                DAFTAR RASMI ${type} - KEMENTERIAN PENDIDIKAN MALAYSIA
+            </div>
+            <p class="text-xs text-slate-500 mb-4 text-center">Rekod diselaraskan secara automatik dari pangkalan data utama e-ASET PKG Pelangai.</p>
+            <table class="w-full tbl-border text-center text-xs font-borang">
+                <thead>
+                    <tr class="bg-gray-200 font-bold">
+                        <td class="p-2">Bil</td>
+                        <td class="p-2">No. Siri Pendaftaran</td>
+                        <td class="p-2">Keterangan / Nama Aset</td>
+                        <td class="p-2">Lokasi Penempatan</td>
+                        <td class="p-2">Status</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${asetDatabase.map((a, idx) => `
+                        <tr>
+                            <td class="p-1.5">${idx+1}</td>
+                            <td class="p-1.5 font-mono font-bold text-blue-900">${a.noSiri}</td>
+                            <td class="p-1.5 text-left">${a.nama}</td>
+                            <td class="p-1.5">${a.lokasi}</td>
+                            <td class="p-1.5 font-bold">${a.status}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    }
+}
 
         function switchKEWPA2Part(part) {
             currentKEWPA2Part = part;
@@ -1466,33 +1532,73 @@
                 viewB.classList.remove('hidden');
             }
         }
+	
+	function renderKEWPAView() {
+    const selectedJenis = document.getElementById('select-jenis-kewpa').value; // Dapatkan KEW.PA-3 atau KEW.PA-4
+    const selectedId = document.getElementById('select-kewpa2-unit').value;
+    const aset = asetDatabase.find(a => a.id === selectedId) || asetDatabase[0];
+    if (!aset) return;
 
-        function renderKEWPAView() {
-            const selectedId = document.getElementById('select-kewpa2-unit').value;
-            const aset = asetDatabase.find(a => a.id === selectedId) || asetDatabase[0];
-            if (!aset) return;
+    const formattedTarikh = formatTarikhDDMMYYYY(aset.tarikh);
 
-            const formattedTarikh = formatTarikhDDMMYYYY(aset.tarikh);
+    // =========================================================
+    // 1. KEMASKINI BAHAGIAN A (TAJUK & KOD KEW.PA)
+    // =========================================================
+    const labelKodKewpaA = document.getElementById('kewpa2-nosiri').parentElement.previousElementSibling;
+    if (labelKodKewpaA) {
+        labelKodKewpaA.innerText = selectedJenis; // Mengubah KEW.PA-3 / KEW.PA-4
+    }
 
-            document.getElementById('kewpa2-nosiri').innerText = aset.noSiri;
-            document.getElementById('kewpa2-kodnasional').innerText = aset.kodNasional || '';
-            document.getElementById('kewpa2-harga').innerText = `RM ${aset.harga.toFixed(2)}`;
-            document.getElementById('kewpa2-kategori').innerText = aset.kategori || 'Peralatan ICT / COE';
-            document.getElementById('kewpa2-subkategori').innerText = aset.subKategori || '-';
-            document.getElementById('kewpa2-jenis').innerText = aset.nama;
-            document.getElementById('kewpa2-tarikh').innerText = formattedTarikh;
-            document.getElementById('kewpa2-lo').innerText = aset.lo || '-';
-            document.getElementById('kewpa2-jaminan').innerText = aset.jaminan || '-';
-            document.getElementById('kewpa2-buatan').innerText = aset.buatan || 'Malaysia';
-            document.getElementById('kewpa2-pembekal').innerText = aset.pembekal || '-';
-            document.getElementById('kewpa2-casis').innerText = aset.casis || '-';
-            document.getElementById('kewpa2-komponen').innerText = aset.catatan || '-';
-
-            document.getElementById('kewpa2-penempatan-lokasi').innerText = aset.lokasi;
-            document.getElementById('kewpa2-penempatan-tarikh').innerText = formattedTarikh;
-            document.getElementById('kewpa2-pemeriksaan-tarikh').innerText = formattedTarikh;
-            document.getElementById('kewpa2-pemeriksaan-status').innerText = aset.status;
+    const titleElementA = document.querySelector('#view-part-a .text-center.font-bold.text-sm.mt-2');
+    if (titleElementA) {
+        if (selectedJenis === 'KEW.PA-4') {
+            titleElementA.innerText = 'DAFTAR ASET ALIH BERNILAI RENDAH';
+        } else {
+            titleElementA.innerText = 'DAFTAR HARTA MODAL';
         }
+    }
+
+    // =========================================================
+    // 2. KEMASKINI BAHAGIAN B (TAJUK & KOD KEW.PA)
+    // =========================================================
+    const viewB = document.getElementById('view-part-b');
+    if (viewB) {
+        // Tukar Kod KEW.PA di atas sebelah kanan Bahagian B
+        const labelKodKewpaB = viewB.querySelector('.text-right.font-bold.text-xs');
+        if (labelKodKewpaB) {
+            labelKodKewpaB.innerText = selectedJenis;
+        }
+
+        // Tukar Tajuk Utama Bahagian B
+        const titleElementB = viewB.querySelector('.text-center.font-bold.text-xs.leading-relaxed');
+        if (titleElementB) {
+            const tajukUtama = selectedJenis === 'KEW.PA-4' ? 'DAFTAR ASET ALIH BERNILAI RENDAH' : 'DAFTAR HARTA MODAL';
+            titleElementB.innerHTML = `${tajukUtama}<br>BUTIR-BUTIR PENAMBAHAN, PENGGANTIAN DAN NAIKTARAF<br>BAHAGIAN B`;
+        }
+    }
+
+    // =========================================================
+    // 3. MASUKKAN DATA ASET SEPERTI BIASA
+    // =========================================================
+    document.getElementById('kewpa2-nosiri').innerText = aset.noSiri;
+    document.getElementById('kewpa2-kodnasional').innerText = aset.kodNasional || '';
+    document.getElementById('kewpa2-harga').innerText = `RM ${aset.harga.toFixed(2)}`;
+    document.getElementById('kewpa2-kategori').innerText = aset.kategori || 'Peralatan ICT / COE';
+    document.getElementById('kewpa2-subkategori').innerText = aset.subKategori || '-';
+    document.getElementById('kewpa2-jenis').innerText = aset.nama;
+    document.getElementById('kewpa2-tarikh').innerText = formattedTarikh;
+    document.getElementById('kewpa2-lo').innerText = aset.lo || '-';
+    document.getElementById('kewpa2-jaminan').innerText = aset.jaminan || '-';
+    document.getElementById('kewpa2-buatan').innerText = aset.buatan || 'Malaysia';
+    document.getElementById('kewpa2-pembekal').innerText = aset.pembekal || '-';
+    document.getElementById('kewpa2-casis').innerText = aset.casis || '-';
+    document.getElementById('kewpa2-komponen').innerText = aset.catatan || '-';
+
+    document.getElementById('kewpa2-penempatan-lokasi').innerText = aset.lokasi;
+    document.getElementById('kewpa2-penempatan-tarikh').innerText = formattedTarikh;
+    document.getElementById('kewpa2-pemeriksaan-tarikh').innerText = formattedTarikh;
+    document.getElementById('kewpa2-pemeriksaan-status').innerText = aset.status;
+}
 
         function populateAduanSelect() {
             const select = document.getElementById('aduan-select-aset');
