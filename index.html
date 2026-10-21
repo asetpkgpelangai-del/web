@@ -534,6 +534,20 @@
                             </div>
 
                         </div>
+			<div class="md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-slate-100">
+    <div>
+        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
+            Nama Pegawai Pendaftaran <span class="text-red-500">*</span>
+        </label>
+        <input type="text" id="reg-pegawai" required value="Ahmad Bin Zulkifli" placeholder="Cth: Ahmad Bin Zulkifli" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+    </div>
+    <div>
+        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
+            Jawatan Pegawai <span class="text-red-500">*</span>
+        </label>
+        <input type="text" id="reg-jawatan" required value="Pegawai Aset PKG" placeholder="Cth: Pegawai Aset PKG" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+    </div>
+</div>
 
                         <div class="flex justify-end gap-3 pt-4 border-t border-slate-200">
                             <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2">
@@ -782,13 +796,15 @@
                                                 <td class="p-1"></td>
                                                 <td class="p-1"></td>
                                             </tr>
-                                            <tr>
-                                                <td class="p-1 font-semibold bg-gray-100 text-left">Nama Pegawai</td>
-                                                <td class="p-1 text-left text-[10px]">Ahmad Bin Zulkifli</td>
-                                                <td class="p-1"></td>
-                                                <td class="p-1"></td>
-                                                <td class="p-1"></td>
-                                            </tr>
+                                            
+						<tr>
+ 						<td class="p-1 font-semibold bg-gray-100 text-left">Nama Pegawai</td>
+						<td class="p-1 text-left text-[10px]" id="kewpa2-penempatan-pegawai">Mohd Huszaini bin Zakaria</td>
+						<td class="p-1"></td>
+ 						<td class="p-1"></td>
+   						<td class="p-1"></td>
+						</tr>
+
                                             <tr>
                                                 <td class="p-1 font-semibold bg-gray-100 text-left">Tandatangan</td>
                                                 <td class="p-1"></td>
@@ -1158,54 +1174,23 @@
             return dateString;
         }
 
-        const initialSampleAset = [
-            ...Array.from({ length: 22 }, (_, i) => ({
-                id: `ROB-${i + 1}`,
-                group: 'SET KIT ROBOTIK',
-                noSiri: `KPM/JPNPAH/C010/PKGPLG/R/23/2-${i + 1}`,
-                nama: `SET KIT ROBOTIK (UNIT #${i + 1})`,
-                kodNasional: '',
-                kategori: 'Peralatan ICT / COE',
-                subKategori: 'Robotik & Automasi',
-                lokasi: 'Studio COE / Makmal Robotik',
-                tarikh: '10/05/2023',
-                harga: 450.00,
-                status: 'Sangat Baik',
-                buatan: 'Malaysia',
-                casis: `SN-ROB2023-${i + 1}`,
-                lo: 'LO/KPM/2023/0891',
-                jaminan: '1 Tahun',
-                pembekal: 'EduTech STEM Supplies Sdn Bhd, No. 12, Jalan Sultan Ahmad, 25000 Kuantan, Pahang.',
-                catatan: '1x Mikro Pengawal Utama, 1x Modul Bluetooth, 4x Motor DC, 2x Sensor Ultrasonik, 1x Bateri Boleh Cas, 1x Kabel Pengecas USB.'
-            })),
-            ...Array.from({ length: 22 }, (_, i) => ({
-                id: `MCU-${i + 1}`,
-                group: 'MICROCONTROLLER PROGRAMMER (8051)',
-                noSiri: `KPM/JPNPAH/C010/PKGPLG/R/23/3-${i + 1}`,
-                nama: `MICROCONTROLLER PROGRAMMER (8051) (UNIT #${i + 1})`,
-                kodNasional: '',
-                kategori: 'Peralatan ICT / COE',
-                subKategori: 'Pengaturcaraan Elektronik',
-                lokasi: 'Studio COE / Makmal Robotik',
-                tarikh: '10/05/2023',
-                harga: 180.00,
-                status: 'Sangat Baik',
-                buatan: 'Taiwan',
-                casis: `MCU8051-${i + 1}`,
-                lo: 'LO/KPM/2023/0891',
-                jaminan: '1 Tahun',
-                pembekal: 'EduTech STEM Supplies Sdn Bhd, No. 12, Jalan Sultan Ahmad, 25000 Kuantan, Pahang.',
-                catatan: 'Papan pengaturcaraan cip 8051 lengkap kabel USB.'
-            }))
-        ];
+     const initialSampleAset = [];
 
        let asetDatabase = [];
         let aduanDatabase = [];
         let html5QrCodeScanner = null;
         let selectedAsetForModal = null;
 
-     window.addEventListener('DOMContentLoaded', () => {
-    loadStorageData();
+window.addEventListener('DOMContentLoaded', async () => {
+    // 1. Muat data storan tempatan dahulu
+    await loadStorageData();
+
+    // 2. Tarik data dari Turso Cloud Database secara automatik
+    if (window.db) {
+        await syncDataFromTurso();
+    }
+
+    // 3. Kemaskini dan bina semula paparan jadual
     updateDashboardStats();
     renderRecentTable();
     renderMasterTable();
@@ -1214,9 +1199,6 @@
     populateAduanSelect();
     renderAduanList();
 
-    // Tarik data dari Turso Cloud Database secara automatik
-    syncDataFromTurso();
-
     // BACA SEKSYEN TERAKHIR BILA REFRESH (GUNAKAN localStorage)
     const savedSection = window.location.hash.replace('#', '') || 
                          localStorage.getItem('eAset_active_section') || 
@@ -1224,6 +1206,7 @@
     
     showSection(savedSection);
 });
+
 async function syncDataFromTurso() {
     if (!window.db) return;
     try {
@@ -1247,7 +1230,10 @@ async function syncDataFromTurso() {
                 lo: row.lo,
                 jaminan: row.jaminan,
                 pembekal: row.pembekal,
-                catatan: row.catatan
+                catatan: row.catatan,
+                // TAMBAH 2 BARIS PEMETAAN INI
+                pegawaiDaftar: row.pegawai_daftar || 'Mohd Huszaini bin Zakaria',
+                jawatanPegawai: row.jawatan_pegawai || 'Juruteknik Komputer'
             }));
         }
 
@@ -1281,37 +1267,54 @@ async function syncDataFromTurso() {
     }
 }
 
-        function loadStorageData() {
-            const stored = localStorage.getItem('eAset_PKG_KEWPA2_Data');
-            if (stored) {
-                asetDatabase = JSON.parse(stored);
-            } else {
-                asetDatabase = [...initialSampleAset];
-                saveStorageData();
-            }
+   async function loadStorageData() {
+    const stored = localStorage.getItem('eAset_PKG_KEWPA2_Data');
+    if (stored) {
+        asetDatabase = JSON.parse(stored);
+    } else {
+        asetDatabase = [];
+    }
 
-            const storedAduan = localStorage.getItem('eAset_PKG_Aduan');
-            if (storedAduan) {
-                aduanDatabase = JSON.parse(storedAduan);
-            }
+    const storedAduan = localStorage.getItem('eAset_PKG_Aduan');
+    if (storedAduan) {
+        aduanDatabase = JSON.parse(storedAduan);
+    } else {
+        aduanDatabase = [];
+    }
+
+    // TARIK DATA DARI TURSO CLOUD AUTOMATIK JIKA SAMBUNGAN WUJUD
+    if (window.db) {
+        await syncDataFromTurso();
+    }
+}
+function saveStorageData() {
+    localStorage.setItem('eAset_PKG_KEWPA2_Data', JSON.stringify(asetDatabase));
+    localStorage.setItem('eAset_PKG_Aduan', JSON.stringify(aduanDatabase));
+    updateDashboardStats();
+}
+
+async function resetSystemData() {
+    if (confirm("Padam simpanan tempatan & kemaskini semula data dari Turso Cloud?")) {
+        // 1. Bersihkan storan pelayar tempatan
+        localStorage.removeItem('eAset_PKG_KEWPA2_Data');
+        localStorage.removeItem('eAset_PKG_Aduan');
+        
+        asetDatabase = [];
+        aduanDatabase = [];
+
+        // 2. Tarik semula data terbaharu dari Turso Cloud Database
+        if (window.db) {
+            await syncDataFromTurso();
+        } else {
+            saveStorageData();
+            renderMasterTable();
+            renderAduanList();
         }
 
-        function saveStorageData() {
-            localStorage.setItem('eAset_PKG_KEWPA2_Data', JSON.stringify(asetDatabase));
-            localStorage.setItem('eAset_PKG_Aduan', JSON.stringify(aduanDatabase));
-            updateDashboardStats();
-        }
-
-        function resetSystemData() {
-            if (confirm("Reset data ke sampel asal PKG?")) {
-                localStorage.removeItem('eAset_PKG_KEWPA2_Data');
-                localStorage.removeItem('eAset_PKG_Aduan');
-                asetDatabase = [...initialSampleAset];
-                aduanDatabase = [];
-                saveStorageData();
-                location.reload();
-            }
-        }
+        showToast("Storan tempatan dibersihkan & diselaraskan dari Turso!", "success");
+        location.reload();
+    }
+}
 
         /* FUNGSI CETAK KHAS UNTUK BORANG KEW.PA SAHAJA */
         function cetakBorangKEWPAKhas() {
@@ -1423,108 +1426,116 @@ function showSection(sectionId) {
             document.getElementById('container-kuantiti').style.display = isPukal ? 'block' : 'none';
         }
 
-       async function handleFormDaftar(e) {
-            e.preventDefault();
-            const mode = document.querySelector('input[name="mod_daftar"]:checked').value;
-            const nama = document.getElementById('reg-nama').value.toUpperCase();
-            const kodNasional = document.getElementById('reg-kodnasional').value;
-            const kategori = document.getElementById('reg-kategori').value;
-            const subKategori = document.getElementById('reg-subkategori').value;
-            const lokasi = document.getElementById('reg-lokasi').value;
-            const prefix = document.getElementById('reg-prefix').value.trim();
-            const kuantiti = parseInt(document.getElementById('reg-kuantiti').value) || 1;
-            const buatan = document.getElementById('reg-buatan').value;
-            const casis = document.getElementById('reg-casis').value;
-            const tarikhRaw = document.getElementById('reg-tarikh').value;
-            const tarikh = formatTarikhDDMMYYYY(tarikhRaw);
-            const harga = parseFloat(document.getElementById('reg-harga').value) || 0;
-            const lo = document.getElementById('reg-lo').value;
-            const jaminan = document.getElementById('reg-jaminan').value;
-            const pembekal = document.getElementById('reg-pembekal').value;
-            const catatan = document.getElementById('reg-catatan').value;
+     async function handleFormDaftar(e) {
+    e.preventDefault();
+    const mode = document.querySelector('input[name="mod_daftar"]:checked').value;
+    const nama = document.getElementById('reg-nama').value.toUpperCase();
+    const kodNasional = document.getElementById('reg-kodnasional').value;
+    const kategori = document.getElementById('reg-kategori').value;
+    const subKategori = document.getElementById('reg-subkategori').value;
+    const lokasi = document.getElementById('reg-lokasi').value;
+    const prefix = document.getElementById('reg-prefix').value.trim();
+    const kuantiti = parseInt(document.getElementById('reg-kuantiti').value) || 1;
+    const buatan = document.getElementById('reg-buatan').value;
+    const casis = document.getElementById('reg-casis').value;
+    const tarikhRaw = document.getElementById('reg-tarikh').value;
+    const tarikh = formatTarikhDDMMYYYY(tarikhRaw);
+    const harga = parseFloat(document.getElementById('reg-harga').value) || 0;
+    const lo = document.getElementById('reg-lo').value;
+    const jaminan = document.getElementById('reg-jaminan').value;
+    const pembekal = document.getElementById('reg-pembekal').value;
+    const catatan = document.getElementById('reg-catatan').value;
+    
+    // BACA MEDAN BAHARU PEGAWAI & JAWATAN
+    const pegawaiDaftar = document.getElementById('reg-pegawai').value || 'Ahmad Bin Zulkifli';
+    const jawatanPegawai = document.getElementById('reg-jawatan').value || 'Pegawai Aset PKG';
 
-            const newItems = [];
+    const newItems = [];
 
-            if (mode === 'pukal') {
-                for (let i = 1; i <= kuantiti; i++) {
-                    const noSiriUnik = `${prefix}${i}`;
-                    const newAsset = {
-                        id: 'AST-' + Date.now() + '-' + i,
-                        group: nama,
-                        noSiri: noSiriUnik,
-                        nama: `${nama} (UNIT #${i})`,
-                        kodNasional,
-                        kategori,
-                        subKategori,
-                        lokasi,
-                        tarikh,
-                        harga,
-                        status: 'Sangat Baik',
-                        buatan,
-                        casis: casis ? `${casis}-${i}` : `-`,
-                        lo,
-                        jaminan,
-                        pembekal,
-                        catatan
-                    };
-                    asetDatabase.push(newAsset);
-                    newItems.push(newAsset);
-                }
-            } else {
-                const newAsset = {
-                    id: 'AST-' + Date.now(),
-                    group: nama,
-                    noSiri: prefix,
-                    nama: nama,
-                    kodNasional,
-                    kategori,
-                    subKategori,
-                    lokasi,
-                    tarikh,
-                    harga,
-                    status: 'Sangat Baik',
-                    buatan,
-                    casis,
-                    lo,
-                    jaminan,
-                    pembekal,
-                    catatan
-                };
-                asetDatabase.push(newAsset);
-                newItems.push(newAsset);
-            }
-
-            saveStorageData();
-            renderMasterTable();
-            populateStickerGroupSelect();
-            populateKEWPA2Select();
-            populateAduanSelect();
-
-            // HANTAR DATA TERUS KE TURSO CLOUD DATABASE
-            if (window.db) {
-                showToast("Mengimport data ke Turso Cloud...", "info");
-                for (const item of newItems) {
-                    try {
-                      await window.db.execute({
-    sql: `INSERT INTO aset_utama (id, group_nama, no_siri, nama, kod_nasional, kategori, sub_kategori, lokasi, tarikh, harga, status, buatan, casis, lo, jaminan, pembekal, catatan)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    args: [
-        item.id, item.group, item.noSiri, item.nama, item.kodNasional,
-        item.kategori, item.subKategori, item.lokasi, item.tarikh,
-        item.harga, item.status, item.buatan, item.casis, item.lo,
-        item.jaminan, item.pembekal, item.catatan
-    ]
-});
-                    } catch (err) {
-                        console.error("Ralat simpan Turso:", err);
-                    }
-                }
-                showToast("Berjaya disimpan ke Turso Database!", "success");
-            }
-
-            document.getElementById('form-daftar-aset').reset();
-            showSection('senarai-aset');
+    if (mode === 'pukal') {
+        for (let i = 1; i <= kuantiti; i++) {
+            const noSiriUnik = `${prefix}${i}`;
+            const newAsset = {
+                id: 'AST-' + Date.now() + '-' + i,
+                group: nama,
+                noSiri: noSiriUnik,
+                nama: `${nama} (UNIT #${i})`,
+                kodNasional,
+                kategori,
+                subKategori,
+                lokasi,
+                tarikh,
+                harga,
+                status: 'Sangat Baik',
+                buatan,
+                casis: casis ? `${casis}-${i}` : `-`,
+                lo,
+                jaminan,
+                pembekal,
+                catatan,
+                pegawaiDaftar,
+                jawatanPegawai
+            };
+            asetDatabase.push(newAsset);
+            newItems.push(newAsset);
         }
+    } else {
+        const newAsset = {
+            id: 'AST-' + Date.now(),
+            group: nama,
+            noSiri: prefix,
+            nama: nama,
+            kodNasional,
+            kategori,
+            subKategori,
+            lokasi,
+            tarikh,
+            harga,
+            status: 'Sangat Baik',
+            buatan,
+            casis,
+            lo,
+            jaminan,
+            pembekal,
+            catatan,
+            pegawaiDaftar,
+            jawatanPegawai
+        };
+        asetDatabase.push(newAsset);
+        newItems.push(newAsset);
+    }
+
+    saveStorageData();
+    renderMasterTable();
+    populateStickerGroupSelect();
+    populateKEWPA2Select();
+    populateAduanSelect();
+
+    // HANTAR DATA KE TURSO CLOUD DATABASE (JADUAL aset_utama)
+    if (window.db) {
+        showToast("Mengimport data ke Turso Cloud...", "info");
+        for (const item of newItems) {
+            try {
+                await window.db.execute({
+                    sql: `INSERT INTO aset_utama (id, group_nama, no_siri, nama, kod_nasional, kategori, sub_kategori, lokasi, tarikh, harga, status, buatan, casis, lo, jaminan, pembekal, catatan, pegawai_daftar, jawatan_pegawai)
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    args: [
+                        item.id, item.group, item.noSiri, item.nama, item.kodNasional,
+                        item.kategori, item.subKategori, item.lokasi, item.tarikh,
+                        item.harga, item.status, item.buatan, item.casis, item.lo,
+                        item.jaminan, item.pembekal, item.catatan, item.pegawaiDaftar, item.jawatanPegawai
+                    ]
+                });
+            } catch (err) {
+                console.error("Ralat simpan Turso:", err);
+            }
+        }
+        showToast("Berjaya disimpan ke Turso Database!", "success");
+    }
+
+    document.getElementById('form-daftar-aset').reset();
+    showSection('senarai-aset');
+}
 
         function renderMasterTable(data = asetDatabase) {
             const tbody = document.getElementById('table-master-aset');
@@ -2164,6 +2175,9 @@ function renderKEWPA1View() {
     const loNo = sample.lo || 'LO/KPM/2023/0891';
     const tarikhTerima = sample.tarikh ? formatTarikhDDMMYYYY(sample.tarikh) : '-';
 
+   const pegawaiAset = sample.pegawaiDaftar || 'Ahmad Bin Zulkifli';
+   const jawatanAset = sample.jawatanPegawai || 'Pegawai Aset PKG';
+
     const groups = [...new Set(asetDatabase.map(a => a.group))];
     let rowsHtml = '';
 
@@ -2259,13 +2273,13 @@ function renderKEWPA1View() {
             <!-- RUANGAN TANDATANGAN PEGAWAI (KEMASKINI DENGAN BOX BORDER KEMAS) -->
             <div class="grid grid-cols-2 gap-4 tbl-border p-2.5 text-[9px] leading-relaxed">
                 <div>
-                    <div class="border-b border-dotted border-black w-3/4 mb-1 h-6"></div>
-                    <p class="font-semibold">(Tandatangan Pegawai Penerima)</p>
-                    <p class="mt-1">Nama: <span class="border-b border-black inline-block w-48 font-bold">Ahmad Bin Zulkifli</span></p>
-                    <p class="mt-0.5">Jawatan: <span class="border-b border-black inline-block w-44">Pegawai Aset PKG</span></p>
-                    <p class="mt-0.5">Jabatan: <span class="border-b border-black inline-block w-44">PKG Pelangai</span></p>
-                    <p class="mt-0.5">Tarikh: <span class="border-b border-black inline-block w-48">${tarikhTerima}</span></p>
-                </div>
+    <div class="border-b border-dotted border-black w-3/4 mb-1 h-6"></div>
+    <p class="font-semibold">(Tandatangan Pegawai Penerima)</p>
+    <p class="mt-1">Nama: <span class="border-b border-black inline-block w-48 font-bold">${pegawaiAset}</span></p>
+    <p class="mt-0.5">Jawatan: <span class="border-b border-black inline-block w-44">${jawatanAset}</span></p>
+    <p class="mt-0.5">Jabatan: <span class="border-b border-black inline-block w-44">PKG Pelangai</span></p>
+    <p class="mt-0.5">Tarikh: <span class="border-b border-black inline-block w-48">${tarikhTerima}</span></p>
+</div>
                 <div>
                     <div class="border-b border-dotted border-black w-3/4 mb-1 h-6"></div>
                     <p class="font-semibold">(*Tandatangan Pegawai Teknikal)</p>
@@ -2287,6 +2301,10 @@ function renderKEWPA2PenolakanView() {
     const pembekalText = sample.pembekal || 'EduTech STEM Supplies Sdn Bhd, Kuantan';
     const loNo = sample.lo || 'LO/KPM/2023/0891';
     const tarikhTerima = sample.tarikh ? formatTarikhDDMMYYYY(sample.tarikh) : '-';
+
+    // 1. TAMBAH PEMBOLEHUBAH DINAMIK PEGAWAI DI SINI
+    const pegawaiAset = sample.pegawaiDaftar || 'Ahmad Bin Zulkifli';
+    const jawatanAset = sample.jawatanPegawai || 'Pegawai Aset PKG';
 
     const rosakList = asetDatabase.filter(a => a.status === 'Rosak');
     let rowsHtml = '';
@@ -2401,8 +2419,9 @@ function renderKEWPA2PenolakanView() {
                     <div>
                         <p class="font-bold text-[10px] mb-2 uppercase">Pegawai Penerima</p>
                         <div class="border-b border-dotted border-black w-3/4 my-4 h-6"></div>
-                        <p>Nama: <span class="border-b border-black inline-block w-52 font-bold">Ahmad Bin Zulkifli</span></p>
-                        <p class="mt-1">Jawatan: <span class="border-b border-black inline-block w-48">Pegawai Aset PKG</span></p>
+                        <!-- 2. PEMBOLEHUBAH DINAMIK PADA TEMPLAT HTML -->
+                        <p>Nama: <span class="border-b border-black inline-block w-52 font-bold">${pegawaiAset}</span></p>
+                        <p class="mt-1">Jawatan: <span class="border-b border-black inline-block w-48">${jawatanAset}</span></p>
                         <p class="mt-1">Tarikh: <span class="border-b border-black inline-block w-52">${tarikhTerima}</span></p>
                         <p class="mt-1">Cap Jabatan: <span class="border-b border-black inline-block w-44"></span></p>
                     </div>
@@ -2528,6 +2547,12 @@ function renderKEWPAView() {
     document.getElementById('kewpa2-penempatan-tarikh').innerText = formattedTarikh;
     document.getElementById('kewpa2-pemeriksaan-tarikh').innerText = formattedTarikh;
     document.getElementById('kewpa2-pemeriksaan-status').innerText = aset.status;
+
+	// MASUKKAN NAMA PEGAWAI PENEMPATAN DINAMIK
+    const penempatanPegawaiElem = document.querySelector('#view-part-a table:nth-of-type(2) tr:nth-child(3) td:nth-child(2)');
+    if (penempatanPegawaiElem) {
+        penempatanPegawaiElem.innerText = aset.pegawaiDaftar || 'Mohd Huszaini bin Zakaria';
+    }
 }
 
         function populateAduanSelect() {
