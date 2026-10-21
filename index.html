@@ -49,6 +49,44 @@
         border: 1px solid black !important;
     }
 
+    /* TETAPAN RESPONSIF KEMAS UNTUK SKRIN TELEFON & SKRIN KECIL */
+    .print-wrapper {
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        padding: 0.5rem !important;
+    }
+
+    /* MEMAKSA KERTAS A4 MENGEKALKAN SAIZ FIZIKAL AGAR TIDAK TERMAMPAT DI TELEFON */
+    .print-page-a4 {
+        box-sizing: border-box !important;
+        width: 210mm !important;
+        min-width: 210mm !important;
+        max-width: 210mm !important;
+        height: auto !important;
+        padding: 10mm !important;
+        margin: 0 auto !important;
+        background: white !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* KONTENA UNTUK BORANG-BORANG LAIN (KEW.PA-1, 2, 5, 6, 7, 8, 10) */
+    #other-kewpa-container-view {
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch;
+        width: 100% !important;
+    }
+
+    #other-kewpa-container-view > div {
+        min-width: 210mm !important; /* Paksa saiz minimum A4 Portrait */
+        box-sizing: border-box !important;
+    }
+
+    /* SAIZ KHAS LANDSKAP DI SKRIN (KEW.PA-1 & KEW.PA-2) UNTUK SLIDE/SCROLL */
+    body.mode-landscape #other-kewpa-container-view > div {
+        min-width: 297mm !important; /* Paksa saiz minimum A4 Landscape */
+    }
+
     /* TETAPAN AT-PAGE PRINTING UNTUK BROWSER */
     @page {
         size: A4 portrait;
@@ -64,6 +102,7 @@
         page: landscape-page !important;
     }
 
+    /* TETAPAN KHAS UNTUK CETAKAN (PRINT MODE SAHAJA) */
     @media print {
         * {
             -webkit-print-color-adjust: exact !important;
@@ -94,9 +133,10 @@
             background: white !important;
             border: none !important;
             box-shadow: none !important;
+            overflow: visible !important;
         }
 
-     /* MOD CETAK STICKER: TEPAT 12 STICKER (2 LAJUR X 6 BARIS) PER MUKA SURAT A4 */
+        /* MOD CETAK STICKER: TEPAT 12 STICKER (2 LAJUR X 6 BARIS) PER MUKA SURAT A4 */
         body.mode-cetak-sticker #sec-dashboard,
         body.mode-cetak-sticker #sec-daftar-aset,
         body.mode-cetak-sticker #sec-senarai-aset,
@@ -143,13 +183,11 @@
             page-break-inside: avoid !important;
             break-inside: avoid !important;
             background: white !important;
-            border: 1.5px dashed #000000 !important; /* GARISAN PUTUS-PUTUS HITAM TERAS UNTUK PEMOTONGAN */
+            border: 1.5px dashed #000000 !important;
             border-radius: 6px !important;
         }
 
-        /* ========================================================= */
-        /* MOD CETAK BORANG KEW.PA (PORTRAIT & LANDSCAPE)            */
-        /* ========================================================= */
+        /* MOD CETAK BORANG KEW.PA (PORTRAIT & LANDSCAPE) */
         body.mode-cetak-borang #sec-dashboard,
         body.mode-cetak-borang #sec-daftar-aset,
         body.mode-cetak-borang #sec-senarai-aset,
@@ -164,10 +202,11 @@
             margin: 0 !important;
         }
 
-        /* CONTAINER BORANG PORTRAIT (KEW.PA-3 & KEW.PA-4 TEPAT 1 PAGE) */
+        /* CONTAINER BORANG PORTRAIT SEMASA MENCETAK */
         .print-page-a4 {
             box-sizing: border-box !important;
             width: 194mm !important;
+            min-width: 194mm !important;
             max-width: 194mm !important;
             height: auto !important;
             padding: 2mm 2mm 5mm 2mm !important;
@@ -193,12 +232,17 @@
             break-after: auto !important;
         }
 
-        /* KHAS UNTUK MOD LANDSCAPE (KEW.PA-1) */
+        /* KHAS UNTUK MOD LANDSCAPE (KEW.PA-1 & KEW.PA-2) */
         body.mode-landscape #other-kewpa-container-view {
             width: 100% !important;
             max-width: 100% !important;
             padding: 0 !important;
             margin: 0 !important;
+        }
+
+        body.mode-landscape #other-kewpa-container-view > div {
+            min-width: 100% !important;
+            width: 100% !important;
         }
     }
 
@@ -600,13 +644,15 @@
                 </div>
 
                 <!-- Printable Document Viewer Container -->
-                <div class="bg-slate-200 p-2 md:p-6 rounded-xl flex justify-center overflow-x-auto print-wrapper">
-                    
+               
+                  <div class="bg-slate-200 p-2 md:p-6 rounded-xl flex justify-start md:justify-center overflow-x-auto print-wrapper">  
+
                     <!-- ================= CONTAINER PAPARAN BORANG KEW.PA-3 ================= -->
-                    <div id="kewpa2-container-view" class="w-full flex justify-center">
-                        
+                    
+                       <div id="kewpa2-container-view" class="w-full flex justify-start md:justify-center overflow-x-auto">
+ 
                         <!-- BAHAGIAN A DISPLAY -->
-                        <div id="view-part-a" class="print-page-a4 font-borang bg-white w-[210mm] shadow-2xl rounded text-[10.5px] leading-tight text-black border border-slate-400 p-[10mm] flex flex-col justify-between">
+                       <div id="view-part-a" class="print-page-a4 font-borang bg-white shadow-2xl rounded text-[10.5px] leading-tight text-black border border-slate-400 p-[10mm] flex flex-col justify-between flex-shrink-0">
                             <div>
                                 <div class="relative mb-3">
                                     <div class="text-right font-bold text-xs">KEW.PA-3</div>
@@ -904,7 +950,8 @@
                     </div>
 
                 <!-- PLACEHOLDER UNTUK BORANG LAIN (KEW.PA-1, 5, 6, 7, 8) -->
-<div id="other-kewpa-container-view" class="hidden bg-white w-full max-w-[280mm] p-6 text-[11px]">
+<div id="other-kewpa-container-view" class="hidden bg-white w-full max-w-[297mm] p-2 sm:p-6 text-[11px] overflow-x-auto">
+
     <div id="other-kewpa-content"></div>
 </div>
 
