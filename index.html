@@ -428,172 +428,199 @@
                 </div>
             </section>
 
-            <!-- SECTION 2: PENDAFTARAN ASET -->
-            <section id="sec-daftar-aset" class="hidden space-y-6">
-                <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
-                    <div class="border-b border-slate-200 pb-4 mb-6">
-                        <h3 class="text-lg font-bold text-slate-800">Borang Pendaftaran KEW.PA (Auto Pukal 1-N)</h3>
-                        <p class="text-xs text-slate-500">Daftar maklumat lengkap aset untuk terus dimasukkan ke dalam KEW.PA Bahagian A & B[cite: 6, 7].</p>
-                    </div>
+           <!-- SECTION 2: PENDAFTARAN ASET -->
+<section id="sec-daftar-aset" class="hidden space-y-6">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+        <div class="border-b border-slate-200 pb-4 mb-6">
+            <h3 class="text-lg font-bold text-slate-800">Borang Pendaftaran KEW.PA (Auto Pukal 1-N)</h3>
+            <p class="text-xs text-slate-500">Daftar maklumat lengkap aset untuk terus dimasukkan ke dalam KEW.PA Bahagian A & B.</p>
+        </div>
 
-                    <form id="form-daftar-aset" onsubmit="handleFormDaftar(event)" class="space-y-6">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <form id="form-daftar-aset" onsubmit="handleFormDaftar(event)" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                            <div class="md:col-span-2 lg:col-span-3 bg-blue-50/50 p-4 rounded-xl border border-blue-100 flex flex-wrap gap-6 items-center">
-                                <span class="text-xs font-bold uppercase text-blue-900">Mod Pendaftaran:</span>
-                                <label class="inline-flex items-center gap-2 cursor-pointer text-sm font-medium text-slate-700">
-                                    <input type="radio" name="mod_daftar" value="pukal" checked onchange="toggleModDaftar()" class="text-blue-600 focus:ring-blue-500">
-                                    <span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded font-semibold text-xs">Pukal (Bulk Entry)</span> - Berbilang Unit (Contoh: 1 - 22)
-                                </label>
-                                <label class="inline-flex items-center gap-2 cursor-pointer text-sm font-medium text-slate-700">
-                                    <input type="radio" name="mod_daftar" value="tunggal" onchange="toggleModDaftar()" class="text-blue-600 focus:ring-blue-500">
-                                    Tunggal (1 Unit Sahaja)
-                                </label>
-                            </div>
+                <div class="md:col-span-2 lg:col-span-3 bg-blue-50/50 p-4 rounded-xl border border-blue-100 flex flex-wrap gap-6 items-center">
+                    <span class="text-xs font-bold uppercase text-blue-900">Mod Pendaftaran:</span>
+                    <label class="inline-flex items-center gap-2 cursor-pointer text-sm font-medium text-slate-700">
+                        <input type="radio" name="mod_daftar" value="pukal" checked onchange="toggleModDaftar()" class="text-blue-600 focus:ring-blue-500">
+                        <span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded font-semibold text-xs">Pukal (Bulk Entry)</span> - Berbilang Unit (Contoh: 1 - 22)
+                    </label>
+                    <label class="inline-flex items-center gap-2 cursor-pointer text-sm font-medium text-slate-700">
+                        <input type="radio" name="mod_daftar" value="tunggal" onchange="toggleModDaftar()" class="text-blue-600 focus:ring-blue-500">
+                        Tunggal (1 Unit Sahaja)
+                    </label>
+                </div>
 
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Jenis / Jenama / Model <span class="text-red-500">*</span></label>
-                                <input type="text" id="reg-nama" required placeholder="Cth: SET KIT ROBOTIK" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none uppercase">
-                            </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Jenis / Jenama / Model <span class="text-red-500">*</span></label>
+                    <input type="text" id="reg-nama" required placeholder="Cth: SET KIT ROBOTIK" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none uppercase">
+                </div>
 
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kod Nasional</label>
-                                <input type="text" id="reg-kodnasional" placeholder="Cth: 7025-1209" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                            </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kod Nasional</label>
+                    <input type="text" id="reg-kodnasional" placeholder="Cth: 7025-1209" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
 
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kategori</label>
-                                <input type="text" id="reg-kategori" value="Peralatan ICT / COE" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                            </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kategori</label>
+                    <input type="text" id="reg-kategori" value="Peralatan ICT / COE" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
 
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Sub Kategori</label>
-                                <input type="text" id="reg-subkategori" value="Robotik & Automasi" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                            </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Sub Kategori</label>
+                    <input type="text" id="reg-subkategori" value="Robotik & Automasi" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
 
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Lokasi Penempatan <span class="text-red-500">*</span></label>
-                                <select id="reg-lokasi" required class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                                    <option value="Studio COE / Makmal Robotik">Studio COE / Makmal Robotik</option>
-                                    <option value="Bilik Mesyuarat Utama">Bilik Mesyuarat Utama</option>
-                                    <option value="Makmal Komputer / ICT">Makmal Komputer / ICT</option>
-                                    <option value="Pejabat PKG">Pejabat PKG</option>
-                                </select>
-                            </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Lokasi Penempatan <span class="text-red-500">*</span></label>
+                    <select id="reg-lokasi" required class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="Studio COE / Makmal Robotik">Studio COE / Makmal Robotik</option>
+                        <option value="Bilik Mesyuarat Utama">Bilik Mesyuarat Utama</option>
+                        <option value="Makmal Komputer / ICT">Makmal Komputer / ICT</option>
+                        <option value="Pejabat PKG">Pejabat PKG</option>
+                    </select>
+                </div>
 
-                            <div class="md:col-span-2">
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
-                                    Prefix No. Siri Pendaftaran <span class="text-red-500">*</span>
-                                </label>
-                                <input type="text" id="reg-prefix" required placeholder="Cth: KPM/JPNPAH/C010/PKGPLG/R/23/2-" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono">
-                            </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Cara Aset Diperolehi <span class="text-red-500">*</span></label>
+                    <select id="reg-cara-perolehan" required class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                        <option value="PEMBELIAN LO">PEMBELIAN LO</option>
+                        <option value="PEROLEHAN">PEROLEHAN</option>
+                    </select>
+                </div>
 
-                            <div id="container-kuantiti">
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kuantiti Unit <span class="text-red-500">*</span></label>
-                                <input type="number" id="reg-kuantiti" min="1" max="100" value="22" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-bold text-blue-700">
-                            </div>
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                        Prefix No. Siri Pendaftaran <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="reg-prefix" required placeholder="Cth: KPM/JPNPAH/C010/PKGPLG/R/23/2-" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono">
+                </div>
 
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Buatan</label>
-                                <input type="text" id="reg-buatan" value="Malaysia" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                            </div>
+                <div id="container-kuantiti">
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kuantiti Unit <span class="text-red-500">*</span></label>
+                    <input type="number" id="reg-kuantiti" min="1" max="100" value="22" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-bold text-blue-700">
+                </div>
 
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">No Casis / Siri Pembuat</label>
-                                <input type="text" id="reg-casis" placeholder="Cth: SN-ROB2023-01" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono">
-                            </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Buatan</label>
+                    <input type="text" id="reg-buatan" value="Malaysia" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
 
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tarikh Diterima</label>
-                                <input type="date" id="reg-tarikh" value="2023-05-10" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                            </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">No Casis / Siri Pembuat</label>
+                    <input type="text" id="reg-casis" placeholder="Cth: SN-ROB2023-01" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono">
+                </div>
 
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Harga Perolehan Asal (RM)</label>
-                                <input type="number" step="0.01" id="reg-harga" value="450.00" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                            </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tarikh Diterima</label>
+                    <input type="date" id="reg-tarikh" value="2023-05-10" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
 
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">No. Pesanan Rasmi (LO)</label>
-                                <input type="text" id="reg-lo" value="LO/KPM/2023/0891" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono">
-                            </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Harga Perolehan Asal (RM)</label>
+                    <input type="number" step="0.01" id="reg-harga" value="450.00" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
 
-                            <div>
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tempoh Jaminan</label>
-                                <input type="text" id="reg-jaminan" value="1 Tahun" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                            </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">No. Pesanan Rasmi (LO)</label>
+                    <input type="text" id="reg-lo" value="LO/KPM/2023/0891" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono">
+                </div>
 
-                            <div class="md:col-span-2">
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Pembekal & Alamat</label>
-                                <input type="text" id="reg-pembekal" value="EduTech STEM Supplies Sdn Bhd, No. 12, Jalan Sultan Ahmad, 25000 Kuantan, Pahang." class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                            </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tempoh Jaminan</label>
+                    <input type="text" id="reg-jaminan" value="1 Tahun" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
 
-                            <div class="md:col-span-2 lg:col-span-3">
-                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Komponen / Aksesori</label>
-                                <textarea id="reg-catatan" rows="2" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">1x Mikro Pengawal Utama, 1x Modul Bluetooth, 4x Motor DC, 2x Sensor Ultrasonik, 1x Bateri Boleh Cas, 1x Kabel Pengecas USB.</textarea>
-                            </div>
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Pembekal & Alamat</label>
+                    <input type="text" id="reg-pembekal" value="EduTech STEM Supplies Sdn Bhd, No. 12, Jalan Sultan Ahmad, 25000 Kuantan, Pahang." class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
 
-                        </div>
-			<div class="md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-slate-100">
-    <div>
-        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
-            Nama Pegawai Pendaftaran <span class="text-red-500">*</span>
-        </label>
-        <input type="text" id="reg-pegawai" required value="Ahmad Bin Zulkifli" placeholder="Cth: Ahmad Bin Zulkifli" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                <div class="md:col-span-2 lg:col-span-3">
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Komponen / Aksesori</label>
+                    <textarea id="reg-catatan" rows="2" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">1x Mikro Pengawal Utama, 1x Modul Bluetooth, 4x Motor DC, 2x Sensor Ultrasonik, 1x Bateri Boleh Cas, 1x Kabel Pengecas USB.</textarea>
+                </div>
+
+            </div>
+
+            <div class="md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-slate-100">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                        Nama Pegawai Pendaftaran <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="reg-pegawai" required value="Ahmad Bin Zulkifli" placeholder="Cth: Ahmad Bin Zulkifli" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                        Jawatan Pegawai <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="reg-jawatan" required value="Pegawai Aset PKG" placeholder="Cth: Pegawai Aset PKG" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
+                        Jabatan / Kementerian <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="reg-jabatan" required value="PKG Pelangai" placeholder="Cth: PKG Pelangai" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-slate-200">
+                <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-save"></i> Simpan Ke KEW.PA
+                </button>
+            </div>
+        </form>
     </div>
-    <div>
-        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
-            Jawatan Pegawai <span class="text-red-500">*</span>
-        </label>
-        <input type="text" id="reg-jawatan" required value="Pegawai Aset PKG" placeholder="Cth: Pegawai Aset PKG" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+</section>
+
+          <!-- SECTION 3: SENARAI ASET -->
+<section id="sec-senarai-aset" class="hidden space-y-4">
+    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+            <!-- Filter Lokasi -->
+            <select id="filter-lokasi" onchange="applyFilters()" class="p-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                <option value="SEMUA">Semua Lokasi</option>
+                <option value="Studio COE / Makmal Robotik">Studio COE / Makmal Robotik</option>
+                <option value="Bilik Mesyuarat Utama">Bilik Mesyuarat Utama</option>
+                <option value="Makmal Komputer / ICT">Makmal Komputer / ICT</option>
+            </select>
+
+            <!-- Dropdown Pilih Kumpulan Aset Pukal -->
+            <select id="select-padam-group" class="p-2 text-xs border border-red-300 bg-red-50 text-red-900 font-bold rounded-lg focus:ring-2 focus:ring-red-500 outline-none">
+                <option value="">-- Pilih Kumpulan Untuk Padam --</option>
+            </select>
+
+            <!-- Butang Padam Pukal -->
+            <button onclick="padamAsetPukal()" class="px-3 py-2 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-lg shadow transition-all flex items-center gap-1.5">
+                <i class="fa-solid fa-trash-can"></i> Padam Pukal
+            </button>
+        </div>
+
+        <div class="text-xs text-slate-500 font-medium">
+            Jumlah: <span id="filtered-count" class="font-bold text-slate-800">0</span> rekod aset
+        </div>
     </div>
-</div>
 
-                        <div class="flex justify-end gap-3 pt-4 border-t border-slate-200">
-                            <button type="submit" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2">
-                                <i class="fa-solid fa-save"></i> Simpan Ke KEW.PA
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </section>
-
-            <!-- SECTION 3: SENARAI ASET -->
-            <section id="sec-senarai-aset" class="hidden space-y-4">
-                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
-                        <select id="filter-lokasi" onchange="applyFilters()" class="p-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                            <option value="SEMUA">Semua Lokasi</option>
-                            <option value="Studio COE / Makmal Robotik">Studio COE / Makmal Robotik</option>
-                            <option value="Bilik Mesyuarat Utama">Bilik Mesyuarat Utama</option>
-                            <option value="Makmal Komputer / ICT">Makmal Komputer / ICT</option>
-                        </select>
-                    </div>
-                    <div class="text-xs text-slate-500 font-medium">
-                        Jumlah: <span id="filtered-count" class="font-bold text-slate-800">0</span> rekod aset
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-sm">
-                            <thead class="bg-slate-800 text-white text-xs font-semibold uppercase tracking-wider">
-                                <tr>
-                                    <th class="p-3 text-center w-12">Bil</th>
-                                    <th class="p-3">No. Siri Pendaftaran</th>
-                                    <th class="p-3">Jenis / Jenama / Model</th>
-                                    <th class="p-3">Lokasi Penempatan</th>
-                                    <th class="p-3">Tarikh</th>
-                                    <th class="p-3 text-right">Harga (RM)</th>
-                                    <th class="p-3 text-center">Status</th>
-                                    <th class="p-3 text-center w-28">Tindakan</th>
-                                </tr>
-                            </thead>
-                            <tbody id="table-master-aset" class="divide-y divide-slate-100"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-slate-800 text-white text-xs font-semibold uppercase tracking-wider">
+                    <tr>
+                        <th class="p-3 text-center w-12">Bil</th>
+                        <th class="p-3">No. Siri Pendaftaran</th>
+                        <th class="p-3">Jenis / Jenama / Model</th>
+                        <th class="p-3">Lokasi Penempatan</th>
+                        <th class="p-3">Tarikh</th>
+                        <th class="p-3 text-right">Harga (RM)</th>
+                        <th class="p-3 text-center">Status</th>
+                        <th class="p-3 text-center w-28">Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody id="table-master-aset" class="divide-y divide-slate-100"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
             <!-- SECTION 4: CETAKAN STICKER QR (LENGKAP TEPAT 12 STICKER PER MUKA SURAT A4) -->
             <section id="sec-sticker-qr" class="hidden space-y-6">
@@ -1199,6 +1226,9 @@ window.addEventListener('DOMContentLoaded', async () => {
     populateAduanSelect();
     renderAduanList();
 
+    // BARIS BAHARU: Muat pilihan kumpulan untuk fungsi Padam Pukal
+    populatePadamGroupSelect();
+
     // BACA SEKSYEN TERAKHIR BILA REFRESH (GUNAKAN localStorage)
     const savedSection = window.location.hash.replace('#', '') || 
                          localStorage.getItem('eAset_active_section') || 
@@ -1231,9 +1261,11 @@ async function syncDataFromTurso() {
                 jaminan: row.jaminan,
                 pembekal: row.pembekal,
                 catatan: row.catatan,
-                // TAMBAH 2 BARIS PEMETAAN INI
-                pegawaiDaftar: row.pegawai_daftar || 'Mohd Huszaini bin Zakaria',
-                jawatanPegawai: row.jawatan_pegawai || 'Juruteknik Komputer'
+                // MEDAN BAHARU YANG DITAMBAH:
+                caraPerolehan: row.cara_perolehan || 'PEMBELIAN LO',
+                pegawaiDaftar: row.pegawai_daftar || 'Ahmad Bin Zulkifli',
+                jawatanPegawai: row.jawatan_pegawai || 'Pegawai Aset PKG',
+                jabatanPegawai: row.jabatan_pegawai || 'PKG Pelangai'
             }));
         }
 
@@ -1261,6 +1293,8 @@ async function syncDataFromTurso() {
         renderAduanList();
         populateStickerGroupSelect();
         populateKEWPA2Select();
+	
+	populatePadamGroupSelect();
 
     } catch (err) {
         console.log("Menggunakan storan tempatan sementara.", err);
@@ -1426,7 +1460,7 @@ function showSection(sectionId) {
             document.getElementById('container-kuantiti').style.display = isPukal ? 'block' : 'none';
         }
 
-     async function handleFormDaftar(e) {
+async function handleFormDaftar(e) {
     e.preventDefault();
     const mode = document.querySelector('input[name="mod_daftar"]:checked').value;
     const nama = document.getElementById('reg-nama').value.toUpperCase();
@@ -1434,6 +1468,7 @@ function showSection(sectionId) {
     const kategori = document.getElementById('reg-kategori').value;
     const subKategori = document.getElementById('reg-subkategori').value;
     const lokasi = document.getElementById('reg-lokasi').value;
+    const caraPerolehan = document.getElementById('reg-cara-perolehan').value || 'PEMBELIAN LO';
     const prefix = document.getElementById('reg-prefix').value.trim();
     const kuantiti = parseInt(document.getElementById('reg-kuantiti').value) || 1;
     const buatan = document.getElementById('reg-buatan').value;
@@ -1446,9 +1481,10 @@ function showSection(sectionId) {
     const pembekal = document.getElementById('reg-pembekal').value;
     const catatan = document.getElementById('reg-catatan').value;
     
-    // BACA MEDAN BAHARU PEGAWAI & JAWATAN
+    // BACA MEDAN PEGAWAI, JAWATAN & JABATAN
     const pegawaiDaftar = document.getElementById('reg-pegawai').value || 'Ahmad Bin Zulkifli';
     const jawatanPegawai = document.getElementById('reg-jawatan').value || 'Pegawai Aset PKG';
+    const jabatanPegawai = document.getElementById('reg-jabatan').value || 'PKG Pelangai';
 
     const newItems = [];
 
@@ -1464,6 +1500,7 @@ function showSection(sectionId) {
                 kategori,
                 subKategori,
                 lokasi,
+                caraPerolehan,
                 tarikh,
                 harga,
                 status: 'Sangat Baik',
@@ -1474,7 +1511,8 @@ function showSection(sectionId) {
                 pembekal,
                 catatan,
                 pegawaiDaftar,
-                jawatanPegawai
+                jawatanPegawai,
+                jabatanPegawai
             };
             asetDatabase.push(newAsset);
             newItems.push(newAsset);
@@ -1489,6 +1527,7 @@ function showSection(sectionId) {
             kategori,
             subKategori,
             lokasi,
+            caraPerolehan,
             tarikh,
             harga,
             status: 'Sangat Baik',
@@ -1499,7 +1538,8 @@ function showSection(sectionId) {
             pembekal,
             catatan,
             pegawaiDaftar,
-            jawatanPegawai
+            jawatanPegawai,
+            jabatanPegawai
         };
         asetDatabase.push(newAsset);
         newItems.push(newAsset);
@@ -1517,13 +1557,13 @@ function showSection(sectionId) {
         for (const item of newItems) {
             try {
                 await window.db.execute({
-                    sql: `INSERT INTO aset_utama (id, group_nama, no_siri, nama, kod_nasional, kategori, sub_kategori, lokasi, tarikh, harga, status, buatan, casis, lo, jaminan, pembekal, catatan, pegawai_daftar, jawatan_pegawai)
-                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    sql: `INSERT INTO aset_utama (id, group_nama, no_siri, nama, kod_nasional, kategori, sub_kategori, lokasi, cara_perolehan, tarikh, harga, status, buatan, casis, lo, jaminan, pembekal, catatan, pegawai_daftar, jawatan_pegawai, jabatan_pegawai)
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
                     args: [
                         item.id, item.group, item.noSiri, item.nama, item.kodNasional,
-                        item.kategori, item.subKategori, item.lokasi, item.tarikh,
+                        item.kategori, item.subKategori, item.lokasi, item.caraPerolehan, item.tarikh,
                         item.harga, item.status, item.buatan, item.casis, item.lo,
-                        item.jaminan, item.pembekal, item.catatan, item.pegawaiDaftar, item.jawatanPegawai
+                        item.jaminan, item.pembekal, item.catatan, item.pegawaiDaftar, item.jawatanPegawai, item.jabatanPegawai
                     ]
                 });
             } catch (err) {
@@ -1576,15 +1616,89 @@ function showSection(sectionId) {
             renderMasterTable(filtered);
         }
 
-        function padamAset(id) {
-            if (confirm("Padam rekod KEW.PA ini?")) {
-                asetDatabase = asetDatabase.filter(a => a.id !== id);
-                saveStorageData();
-                renderMasterTable();
-                populateKEWPA2Select();
-                showToast("Rekod telah dipadam.", "info");
+       async function padamAset(id) {
+    if (confirm("Padam rekod KEW.PA ini?")) {
+        // 1. Padam dari memori tempatan & LocalStorage
+        asetDatabase = asetDatabase.filter(a => a.id !== id);
+        saveStorageData();
+        renderMasterTable();
+        populateKEWPA2Select();
+        populatePadamGroupSelect(); // Kemaskini dropdown hapus massal
+
+        // 2. Padam secara terus dari Turso Cloud Database
+        if (window.db) {
+            try {
+                await window.db.execute({
+                    sql: "DELETE FROM aset_utama WHERE id = ?",
+                    args: [id]
+                });
+                showToast("Rekod berjaya dipadam dari Turso Cloud!", "success");
+            } catch (err) {
+                console.error("Ralat padam Turso:", err);
+                showToast("Ralat memadam dari Turso Database.", "error");
             }
+        } else {
+            showToast("Rekod telah dipadam dari storan tempatan.", "info");
         }
+    }
+}
+
+// 1. Mengisi pilihan kumpulan aset di dalam dropdown
+function populatePadamGroupSelect() {
+    const select = document.getElementById('select-padam-group');
+    if (!select) return;
+    
+    select.innerHTML = '<option value="">-- Pilih Kumpulan Untuk Padam --</option>';
+    const groups = [...new Set(asetDatabase.map(a => a.group))];
+    
+    groups.forEach(grp => {
+        const count = asetDatabase.filter(a => a.group === grp).length;
+        select.innerHTML += `<option value="${grp}">${grp} (${count} unit)</option>`;
+    });
+}
+
+// 2. Memadam kumpulan aset secara pukal
+async function padamAsetPukal() {
+    const selectedGroup = document.getElementById('select-padam-group').value;
+    
+    if (!selectedGroup) {
+        showToast("Sila pilih kumpulan aset yang hendak dipadam terlebih dahulu.", "error");
+        return;
+    }
+
+    const senaraiDipadam = asetDatabase.filter(a => a.group === selectedGroup);
+    const jumlahUnit = senaraiDipadam.length;
+
+    if (confirm(`ADAKAH ANDA PASTI?\n\nKesemua ${jumlahUnit} unit di bawah kumpulan "${selectedGroup}" akan DIPADAM KEKAL daripada sistem dan Turso Cloud Database!`)) {
+        
+        // Padam dari memori tempatan & LocalStorage
+        asetDatabase = asetDatabase.filter(a => a.group !== selectedGroup);
+        saveStorageData();
+        renderMasterTable();
+        populateStickerGroupSelect();
+        populateKEWPA2Select();
+        populatePadamGroupSelect();
+
+        // Padam dari Turso Cloud Database
+        if (window.db) {
+            try {
+                showToast(`Memadam ${jumlahUnit} unit dari Turso Cloud...`, "info");
+                
+                await window.db.execute({
+                    sql: "DELETE FROM aset_utama WHERE group_nama = ?",
+                    args: [selectedGroup]
+                });
+
+                showToast(`Berjaya! Kesemua ${jumlahUnit} unit kumpulan "${selectedGroup}" telah dipadam.`, "success");
+            } catch (err) {
+                console.error("Ralat padam pukal Turso:", err);
+                showToast("Ralat memadam dari Turso Database: " + err.message, "error");
+            }
+        } else {
+            showToast(`Kesemua ${jumlahUnit} unit telah dipadam dari storan tempatan.`, "info");
+        }
+    }
+}
 
         function populateStickerGroupSelect() {
             const select = document.getElementById('sticker-filter-group');
