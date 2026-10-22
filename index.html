@@ -1427,10 +1427,17 @@ function showSection(sectionId) {
     localStorage.setItem('eAset_active_section', sectionId);
 
     if (sectionId === 'sticker-qr') renderStickerSheet();
-    // TUKAR renderKEWPAView() KEPADA handleBorangTypeChange()
-    if (sectionId === 'borang-rasmi') handleBorangTypeChange();
-}
 
+    // APABILA BUKA BORANG RASMI: BACA JENIS BORANG TERAKHIR DARI LOCALSTORAGE
+    if (sectionId === 'borang-rasmi') {
+        const savedKewpa = localStorage.getItem('eAset_active_kewpa');
+        const selectElem = document.getElementById('select-jenis-kewpa');
+        if (savedKewpa && selectElem) {
+            selectElem.value = savedKewpa;
+        }
+        handleBorangTypeChange();
+    }
+}
         function updateDashboardStats() {
             document.getElementById('stat-total-aset').innerText = asetDatabase.length;
             document.getElementById('stat-total-kewpa2').innerText = asetDatabase.length;
@@ -1774,7 +1781,12 @@ function renderStickerSheet() {
 }
 
 function handleBorangTypeChange() {
-    const type = document.getElementById('select-jenis-kewpa').value;
+    const typeSelect = document.getElementById('select-jenis-kewpa');
+    const type = typeSelect.value;
+
+    // SIMPAN PILIHAN BORANG KE LOCALSTORAGE BILA DITUKAR
+    localStorage.setItem('eAset_active_kewpa', type);
+
     const kewpaView = document.getElementById('kewpa2-container-view');
     const kewpaBtns = document.getElementById('kewpa2-sub-buttons');
     const otherView = document.getElementById('other-kewpa-container-view');
