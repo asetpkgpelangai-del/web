@@ -266,6 +266,45 @@
 </head>
 <body class="bg-slate-100 font-sans text-slate-800 antialiased min-h-screen flex flex-col md:flex-row">
 
+<!-- OVERLAY LOG MASUK AKAUN INDIVIDU -->
+<div id="login-overlay" class="fixed inset-0 z-50 bg-slate-950 flex items-center justify-center p-4 no-print">
+    <div class="bg-white rounded-2xl max-w-md w-full p-8 shadow-2xl border border-slate-200 space-y-6">
+        <div class="text-center space-y-2">
+            <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-3xl font-bold mx-auto shadow-lg shadow-blue-500/30">
+                <i class="fa-solid fa-boxes-packing"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-slate-900">e-ASET PKG Pelangai</h2>
+            <p class="text-xs text-slate-500">Log Masuk Akaun Pegawai Aset Rasmi</p>
+        </div>
+
+        <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">ID Pegawai / Username</label>
+                <div class="relative">
+                    <input type="text" id="login-username" required placeholder="Cth: ahmad.zulkifli" class="w-full pl-10 pr-4 py-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <i class="fa-solid fa-user absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kata Laluan</label>
+                <div class="relative">
+                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full pl-10 pr-4 py-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <i class="fa-solid fa-lock absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                </div>
+            </div>
+
+            <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-sm transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
+                <i class="fa-solid fa-right-to-bracket"></i> Log Masuk Sistem
+            </button>
+        </form>
+
+        <div class="pt-4 border-t border-slate-100 text-center text-[11px] text-slate-400">
+            Pusat Kegiatan Guru Pelangai &copy; Sistem Pengurusan Aset
+        </div>
+    </div>
+</div>
+
     <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 no-print"></div>
 
@@ -306,15 +345,21 @@
             </nav>
         </div>
 
-        <div class="p-4 border-t border-slate-800 bg-slate-950/50 text-xs text-slate-400">
-            <div class="flex items-center justify-between mb-1">
-                <span>Status Sistem:</span>
-                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span> Aktif
-                </span>
-            </div>
-            <p class="text-[10px] text-slate-500">Sistem Bersepadu PKG Pelangai</p>
+       <!-- Profil Pegawai & Log Keluar -->
+<div class="p-4 border-t border-slate-800 bg-slate-950/50 text-xs text-slate-400 space-y-3">
+    <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-400 flex items-center justify-center font-bold">
+            <i class="fa-solid fa-user-check"></i>
         </div>
+        <div class="min-w-0 flex-1">
+            <p id="user-display-name" class="font-bold text-white text-xs truncate">Log Masuk Pegawai</p>
+            <p id="user-display-role" class="text-[10px] text-slate-400 truncate">Pegawai Aset</p>
+        </div>
+    </div>
+    <button onclick="handleLogout()" class="w-full py-2 bg-slate-800 hover:bg-red-600/20 text-slate-300 hover:text-red-400 border border-slate-700 hover:border-red-500/30 rounded-lg text-xs font-semibold transition-colors flex items-center justify-center gap-2">
+        <i class="fa-solid fa-right-from-bracket"></i> Log Keluar
+    </button>
+</div>
     </aside>
 
     <!-- Main Content Area -->
@@ -1209,15 +1254,21 @@
         let selectedAsetForModal = null;
 
 window.addEventListener('DOMContentLoaded', async () => {
-    // 1. Muat data storan tempatan dahulu
+    // 1. Cipta & sediakan jadual pengguna Turso
+    await initTursoUsersTable();
+
+    // 2. Semak sesi log masuk pegawai
+    checkUserSession();
+
+    // 3. Muat data storan tempatan dahulu
     await loadStorageData();
 
-    // 2. Tarik data dari Turso Cloud Database secara automatik
+    // 4. Tarik data dari Turso Cloud Database secara automatik
     if (window.db) {
         await syncDataFromTurso();
     }
 
-    // 3. Kemaskini dan bina semula paparan jadual
+    // 5. Kemaskini dan bina semula paparan jadual
     updateDashboardStats();
     renderRecentTable();
     renderMasterTable();
@@ -1225,17 +1276,142 @@ window.addEventListener('DOMContentLoaded', async () => {
     populateKEWPA2Select();
     populateAduanSelect();
     renderAduanList();
-
-    // BARIS BAHARU: Muat pilihan kumpulan untuk fungsi Padam Pukal
     populatePadamGroupSelect();
 
-    // BACA SEKSYEN TERAKHIR BILA REFRESH (GUNAKAN localStorage)
+    // BACA SEKSYEN TERAKHIR BILA REFRESH
     const savedSection = window.location.hash.replace('#', '') || 
                          localStorage.getItem('eAset_active_section') || 
                          'dashboard';
     
     showSection(savedSection);
 });
+
+// DATABASE PENGGUNA DEFAULT (SAMPEL AKAUN INDIVIDU)
+const defaultUsers = [
+    { id: 'usr-1', username: 'amirul', password: 'password123', name: 'Amirul Akbar Bin Amir', role: 'PPTM', dept: 'PKG Pelangai' },
+    { id: 'usr-2', username: 'huszaini', password: 'password123', name: 'Mohd Huszaini bin Zakaria', role: 'PPTM', dept: 'PKG Pelangai' },
+    { id: 'usr-3', username: 'shahrul', password: 'password123', name: 'Mohd Shahrul Izad Bin Shahbani', role: 'PPTM', dept: 'PKG Pelangai' }
+];
+
+let currentUser = null;
+
+// 1. Cipta Jadual Pengguna di Turso Cloud Database
+
+async function initTursoUsersTable() {
+    if (!window.db) return;
+    try {
+        await window.db.execute(`
+            CREATE TABLE IF NOT EXISTS pengguna_sistem (
+                id TEXT PRIMARY KEY,
+                username TEXT UNIQUE,
+                password TEXT,
+                name TEXT,
+                role TEXT,
+                dept TEXT
+            )
+        `);
+
+        // MASUKKAN PEGAWAI DEFAULT JIKA BELUM WUJUD (TANPA MEMADAM DATA Sedia ADA)
+        for (const u of defaultUsers) {
+            await window.db.execute({
+                sql: "INSERT OR IGNORE INTO pengguna_sistem (id, username, password, name, role, dept) VALUES (?, ?, ?, ?, ?, ?)",
+                args: [u.id, u.username, u.password, u.name, u.role, u.dept]
+            });
+        }
+        console.log("Jadual pengguna Turso sedia digunakan!");
+    } catch (err) {
+        console.error("Ralat init jadual pengguna:", err);
+    }
+}
+
+// 2. Semak Sesi Log Masuk
+function checkUserSession() {
+    const savedUser = localStorage.getItem('eAset_logged_user');
+    if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        applyUserSession();
+    } else {
+        document.getElementById('login-overlay').classList.remove('hidden');
+    }
+}
+
+// 3. Pengendali Log Masuk
+async function handleLogin(e) {
+    e.preventDefault();
+    const usernameInput = document.getElementById('login-username').value.trim();
+    const passwordInput = document.getElementById('login-password').value;
+
+    let foundUser = null;
+
+    if (window.db) {
+        try {
+            const res = await window.db.execute({
+                sql: "SELECT * FROM pengguna_sistem WHERE username = ? AND password = ?",
+                args: [usernameInput, passwordInput]
+            });
+            if (res.rows.length > 0) {
+                const row = res.rows[0];
+                foundUser = { id: row.id, username: row.username, name: row.name, role: row.role, dept: row.dept };
+            }
+        } catch (err) {
+            console.error("Ralat pengesahan login:", err);
+        }
+    }
+
+    if (!foundUser) {
+        foundUser = defaultUsers.find(u => u.username === usernameInput && u.password === passwordInput);
+    }
+
+    if (foundUser) {
+        currentUser = foundUser;
+        localStorage.setItem('eAset_logged_user', JSON.stringify(currentUser));
+        applyUserSession();
+        
+        // TAMBAH BARIS INI: Paksa bertukar ke Dashboard sebaik sahaja log masuk berjaya!
+        showSection('dashboard');
+        
+        showToast(`Selamat datang, ${currentUser.name}!`, "success");
+    } else {
+        showToast("ID Pegawai atau Kata Laluan Salah!", "error");
+    }
+}
+
+// 4. Salin Maklumat Pengguna ke Borang Pendaftaran Automatik
+function applyUserSession() {
+    document.getElementById('login-overlay').classList.add('hidden');
+    document.getElementById('user-display-name').innerText = currentUser.name;
+    document.getElementById('user-display-role').innerText = currentUser.role;
+
+    const regPegawai = document.getElementById('reg-pegawai');
+    const regJawatan = document.getElementById('reg-jawatan');
+    const regJabatan = document.getElementById('reg-jabatan');
+
+    if (regPegawai) regPegawai.value = currentUser.name;
+    if (regJawatan) regJawatan.value = currentUser.role;
+    if (regJabatan) regJabatan.value = currentUser.dept;
+    
+    // TIADA ARAHAN showSection('dashboard') DI SINI SUPAYA REFRESH TIDAK TERLOMPAT!
+}
+
+// 5. Log Keluar
+function handleLogout() {
+    if (confirm("Adakah anda pasti untuk log keluar?")) {
+        // 1. Padam sesi pengguna
+        localStorage.removeItem('eAset_logged_user');
+        
+        // 2. Padam memori paparan terakhir
+        localStorage.removeItem('eAset_active_section');
+        localStorage.removeItem('eAset_active_kewpa');
+        
+        // 3. Bersihkan hash pada URL
+        history.pushState("", document.title, window.location.pathname + window.location.search);
+
+        currentUser = null;
+        document.getElementById('login-overlay').classList.remove('hidden');
+        document.getElementById('form-login').reset();
+    }
+}
+  
 
 async function syncDataFromTurso() {
     if (!window.db) return;
