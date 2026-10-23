@@ -267,7 +267,7 @@
 <body class="bg-slate-100 font-sans text-slate-800 antialiased min-h-screen flex flex-col md:flex-row">
 
 <!-- OVERLAY LOG MASUK AKAUN INDIVIDU -->
-<div id="login-overlay" class="fixed inset-0 z-50 bg-slate-950 flex items-center justify-center p-4 no-print">
+<div id="login-overlay" class="fixed inset-0 z-[100] bg-slate-950 flex items-center justify-center p-4 no-print">
     <div class="bg-white rounded-2xl max-w-md w-full p-8 shadow-2xl border border-slate-200 space-y-6">
         <div class="text-center space-y-2">
             <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-3xl font-bold mx-auto shadow-lg shadow-blue-500/30">
@@ -308,82 +308,106 @@
     <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 no-print"></div>
 
-    <!-- Sidebar Navigation -->
-    <aside class="w-full md:w-64 bg-slate-900 text-slate-300 flex-shrink-0 flex flex-col justify-between no-print shadow-xl">
-        <div>
-            <!-- Header Logo -->
-            <div class="p-5 bg-slate-950 flex items-center gap-3 border-b border-slate-800">
-                <div class="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/30">
+<!-- OVERLAY UNTUK TELEFON -->
+<div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/60 z-40 hidden md:hidden transition-opacity"></div>
+
+<!-- SIDEBAR NAVIGATION RESPONSIVE -->
+<aside id="main-sidebar" class="fixed md:static inset-y-0 left-0 z-50 w-64 bg-slate-900 text-slate-300 flex-shrink-0 flex flex-col justify-between no-print shadow-xl transform -translate-x-full md:translate-x-0 transition-all duration-300 ease-in-out">
+    <div>
+        <!-- Header Logo & Butang Tutup Mobile -->
+        <div class="p-4 bg-slate-950 flex items-center justify-between border-b border-slate-800">
+            <div class="flex items-center gap-3 overflow-hidden">
+                <div class="w-10 h-10 rounded-lg bg-blue-600 flex-shrink-0 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/30">
                     <i class="fa-solid fa-boxes-packing"></i>
                 </div>
-                <div>
-                    <h1 class="font-bold text-white text-base leading-tight">e-ASET PKG</h1>
-                    <p class="text-xs text-slate-400">Pusat Kegiatan Guru Pelangai</p>
+                <div class="sidebar-text transition-opacity duration-200">
+                    <h1 class="font-bold text-white text-base leading-tight whitespace-nowrap">e-ASET PKG</h1>
+                    <p class="text-xs text-slate-400 whitespace-nowrap">PPM Pelangai</p>
                 </div>
             </div>
-
-            <!-- Navigation Links -->
-            <nav class="p-3 space-y-1">
-                <a href="#" onclick="showSection('dashboard')" id="nav-dashboard" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white">
-                    <i class="fa-solid fa-chart-pie w-5 text-center"></i> Dashboard
-                </a>
-                <a href="#" onclick="showSection('daftar-aset')" id="nav-daftar-aset" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white hover:bg-slate-800">
-                    <i class="fa-solid fa-plus-circle w-5 text-center"></i> Pendaftaran Aset
-                </a>
-                <a href="#" onclick="showSection('senarai-aset')" id="nav-senarai-aset" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white hover:bg-slate-800">
-                    <i class="fa-solid fa-list-check w-5 text-center"></i> Senarai Aset Utama
-                </a>
-                <a href="#" onclick="showSection('sticker-qr')" id="nav-sticker-qr" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white hover:bg-slate-800">
-                    <i class="fa-solid fa-qrcode w-5 text-center"></i> Cetakan Label Sticker QR
-                </a>
-                <a href="#" onclick="showSection('borang-rasmi')" id="nav-borang-rasmi" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white hover:bg-slate-800">
-                    <i class="fa-solid fa-file-invoice w-5 text-center"></i> Borang KEW.PA
-                </a>
-                <a href="#" onclick="showSection('aduan-rosak')" id="nav-aduan-rosak" class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white hover:bg-slate-800">
-                    <i class="fa-solid fa-triangle-exclamation w-5 text-center"></i> Laporan KEW.PA-10
-                </a>
-            </nav>
+            <!-- Butang X (Hanya Muncul di Telefon) -->
+            <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white p-2 rounded-lg hover:bg-slate-800">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
         </div>
 
-       <!-- Profil Pegawai & Log Keluar -->
-<div class="p-4 border-t border-slate-800 bg-slate-950/50 text-xs text-slate-400 space-y-3">
-    <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-400 flex items-center justify-center font-bold">
-            <i class="fa-solid fa-user-check"></i>
-        </div>
-        <div class="min-w-0 flex-1">
-            <p id="user-display-name" class="font-bold text-white text-xs truncate">Log Masuk Pegawai</p>
-            <p id="user-display-role" class="text-[10px] text-slate-400 truncate">Pegawai Aset</p>
-        </div>
+        <!-- Navigation Links -->
+        <nav class="p-3 space-y-1">
+            <a href="#" onclick="showSection('dashboard')" id="nav-dashboard" title="Dashboard" class="nav-item flex items-center gap-3.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white">
+                <i class="fa-solid fa-chart-pie w-5 text-center text-lg flex-shrink-0"></i> 
+                <span class="sidebar-text whitespace-nowrap">Dashboard</span>
+            </a>
+            <a href="#" onclick="showSection('daftar-aset')" id="nav-daftar-aset" title="Pendaftaran Aset" class="nav-item flex items-center gap-3.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white hover:bg-slate-800">
+                <i class="fa-solid fa-plus-circle w-5 text-center text-lg flex-shrink-0"></i> 
+                <span class="sidebar-text whitespace-nowrap">Pendaftaran Aset</span>
+            </a>
+            <a href="#" onclick="showSection('senarai-aset')" id="nav-senarai-aset" title="Senarai Aset Utama" class="nav-item flex items-center gap-3.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white hover:bg-slate-800">
+                <i class="fa-solid fa-list-check w-5 text-center text-lg flex-shrink-0"></i> 
+                <span class="sidebar-text whitespace-nowrap">Senarai Aset Utama</span>
+            </a>
+            <a href="#" onclick="showSection('sticker-qr')" id="nav-sticker-qr" title="Cetakan Label Sticker QR" class="nav-item flex items-center gap-3.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white hover:bg-slate-800">
+                <i class="fa-solid fa-qrcode w-5 text-center text-lg flex-shrink-0"></i> 
+                <span class="sidebar-text whitespace-nowrap">Cetakan Label QR</span>
+            </a>
+            <a href="#" onclick="showSection('borang-rasmi')" id="nav-borang-rasmi" title="Borang KEW.PA" class="nav-item flex items-center gap-3.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white hover:bg-slate-800">
+                <i class="fa-solid fa-file-invoice w-5 text-center text-lg flex-shrink-0"></i> 
+                <span class="sidebar-text whitespace-nowrap">Borang KEW.PA</span>
+            </a>
+            <a href="#" onclick="showSection('aduan-rosak')" id="nav-aduan-rosak" title="Laporan KEW.PA-10" class="nav-item flex items-center gap-3.5 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-400 hover:text-white hover:bg-slate-800">
+                <i class="fa-solid fa-triangle-exclamation w-5 text-center text-lg flex-shrink-0"></i> 
+                <span class="sidebar-text whitespace-nowrap">Laporan KEW.PA-10</span>
+            </a>
+        </nav>
     </div>
-    <button onclick="handleLogout()" class="w-full py-2 bg-slate-800 hover:bg-red-600/20 text-slate-300 hover:text-red-400 border border-slate-700 hover:border-red-500/30 rounded-lg text-xs font-semibold transition-colors flex items-center justify-center gap-2">
-        <i class="fa-solid fa-right-from-bracket"></i> Log Keluar
-    </button>
-</div>
-    </aside>
+
+    <!-- Profil & Butang Kuncup (Arrow) -->
+    <div class="p-3 border-t border-slate-800 bg-slate-950/50 text-xs text-slate-400 space-y-3">
+        <div class="flex items-center gap-3 overflow-hidden">
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-400 flex-shrink-0 flex items-center justify-center font-bold">
+                <i class="fa-solid fa-user-check"></i>
+            </div>
+            <div class="min-w-0 flex-1 sidebar-text">
+                <p id="user-display-name" class="font-bold text-white text-xs truncate">Log Masuk Pegawai</p>
+                <p id="user-display-role" class="text-[10px] text-slate-400 truncate">Pegawai Aset</p>
+            </div>
+        </div>
+
+        <button onclick="handleLogout()" title="Log Keluar" class="w-full py-2 bg-slate-800 hover:bg-red-600/20 text-slate-300 hover:text-red-400 border border-slate-700 hover:border-red-500/30 rounded-lg text-xs font-semibold transition-colors flex items-center justify-center gap-2">
+            <i class="fa-solid fa-right-from-bracket flex-shrink-0"></i> 
+            <span class="sidebar-text whitespace-nowrap">Log Keluar</span>
+        </button>
+
+        <!-- BUTANG ANAK PANAH KUNCUP / KEMBANG (HANYA MUNCUL DI PC) -->
+        <button onclick="toggleDesktopSidebar()" id="btn-collapse-sidebar" title="Kuncup/Kembang Menu" class="hidden md:flex w-full py-2 bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white rounded-lg border border-slate-800 items-center justify-center transition-colors">
+            <i id="arrow-collapse-icon" class="fa-solid fa-chevron-left text-sm"></i>
+        </button>
+    </div>
+</aside>
 
     <!-- Main Content Area -->
     <main class="flex-1 flex flex-col min-w-0 overflow-y-auto main-content-area">
 
-        <!-- Top Header Bar -->
-        <header class="bg-white border-b border-slate-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 no-print sticky top-0 z-30 shadow-sm">
-            <div class="flex items-center gap-3 w-full sm:w-auto">
-                <h2 id="page-title" class="text-xl font-bold text-slate-800">Dashboard Pengurusan Aset</h2>
-            </div>
+     <!-- TOP HEADER BAR (BUTANG 3 GARIS HANYA UNTUK TELEFON) -->
+<header class="bg-white border-b border-slate-200 px-4 sm:px-6 py-4 flex items-center justify-between gap-4 no-print sticky top-0 z-30 shadow-sm">
+    <div class="flex items-center gap-3">
+        <!-- BUTANG TOGGLE MENU (HANYA MUNCUL DI TELEFON/MOBILE) -->
+        <button onclick="toggleSidebar()" class="md:hidden p-2 text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors flex items-center justify-center">
+            <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+        <h2 id="page-title" class="text-lg sm:text-xl font-bold text-slate-800 truncate">Dashboard Pengurusan Aset</h2>
+    </div>
 
-            <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
-                <button onclick="startCameraScanner()" class="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-2 shadow">
-                    <i class="fa-solid fa-camera"></i> Imbas QR Telefon
-                </button>
-                <div class="relative w-full sm:w-56">
-                    <input type="text" id="global-search" onkeyup="quickSearch(this.value)" placeholder="Cari No. Siri..." class="w-full pl-9 pr-4 py-2 text-sm bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-sm"></i>
-                </div>
-                <button onclick="resetSystemData()" title="Reset Data Ke Sampel Asal" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg border border-slate-200 transition-colors">
-                    <i class="fa-solid fa-rotate-right"></i>
-                </button>
-            </div>
-        </header>
+    <div class="flex items-center gap-2 sm:gap-3">
+        <button onclick="startCameraScanner()" class="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-2 shadow">
+            <i class="fa-solid fa-camera"></i> <span class="hidden sm:inline">Imbas QR Telefon</span>
+        </button>
+        <div class="relative hidden sm:block sm:w-56">
+            <input type="text" id="global-search" onkeyup="quickSearch(this.value)" placeholder="Cari No. Siri..." class="w-full pl-9 pr-4 py-2 text-sm bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-sm"></i>
+        </div>
+       
+    </div>
+</header>
 
         <div class="p-6 flex-1 max-w-7xl w-full mx-auto">
 
@@ -1580,6 +1604,70 @@ async function resetSystemData() {
             }
         }
 
+
+// 1. FUNGSI KUNCUP / KEMBANG SIDEBAR KHAS UNTUK PC (LEBAR MINIMA + IKON SAHAJA)
+function toggleDesktopSidebar() {
+    const sidebar = document.getElementById('main-sidebar');
+    const arrowIcon = document.getElementById('arrow-collapse-icon');
+    const sidebarTexts = document.querySelectorAll('.sidebar-text');
+
+    if (!sidebar) return;
+
+    if (sidebar.classList.contains('w-64')) {
+        // MOD KUNCUP: Tukar lebar ke w-20 (cukup untuk ikon sahaja)
+        sidebar.classList.remove('w-64');
+        sidebar.classList.add('w-20');
+
+        // Sembunyikan semua teks
+        sidebarTexts.forEach(el => el.classList.add('hidden'));
+
+        // Tukar anak panah pointing ke kanan (>)
+        if (arrowIcon) {
+            arrowIcon.classList.remove('fa-chevron-left');
+            arrowIcon.classList.add('fa-chevron-right');
+        }
+    } else {
+        // MOD KEMBANG: Kembalikan lebar ke w-64
+        sidebar.classList.remove('w-20');
+        sidebar.classList.add('w-64');
+
+        // Tunjukkan semula teks
+        sidebarTexts.forEach(el => el.classList.remove('hidden'));
+
+        // Tukar anak panah pointing ke kiri (<)
+        if (arrowIcon) {
+            arrowIcon.classList.remove('fa-chevron-right');
+            arrowIcon.classList.add('fa-chevron-left');
+        }
+    }
+}
+
+// FUNGSI TOGGLE SIDEBAR UNTUK TELEFON BIMBIT
+function toggleSidebar() {
+    const sidebar = document.getElementById('main-sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    const sidebarTexts = document.querySelectorAll('.sidebar-text');
+    
+    if (!sidebar) return;
+
+    // Pastikan di HP lebar selalu kembali penuh (w-64) dan teks terlihat
+    if (window.innerWidth < 768) {
+        sidebar.classList.remove('w-20');
+        sidebar.classList.add('w-64');
+        sidebarTexts.forEach(el => el.classList.remove('hidden'));
+    }
+
+    const isClosed = sidebar.classList.contains('-translate-x-full');
+    if (isClosed) {
+        sidebar.classList.remove('-translate-x-full');
+        if (backdrop) backdrop.classList.remove('hidden');
+    } else {
+        sidebar.classList.add('-translate-x-full');
+        if (backdrop) backdrop.classList.add('hidden');
+    }
+}
+
+// 3. FUNGSI SHOWSECTION (SIDEBAR TERTUTUP AUTOMATIK DI TELEFON SELEPAS MENU DITEKAN)
 function showSection(sectionId) {
     document.querySelectorAll('main > div > section').forEach(sec => sec.classList.add('hidden'));
     document.querySelectorAll('.nav-item').forEach(nav => {
@@ -1598,6 +1686,14 @@ function showSection(sectionId) {
         activeNav.classList.remove('text-slate-400');
     }
 
+    // TERTUTUPKAN SIDEBAR AUTOMATIK APABILA MENU DITEKAN DI TELEFON
+    const sidebar = document.getElementById('main-sidebar');
+    const backdrop = document.getElementById('sidebar-backdrop');
+    if (window.innerWidth < 768 && sidebar && !sidebar.classList.contains('-translate-x-full')) {
+        sidebar.classList.add('-translate-x-full');
+        if (backdrop) backdrop.classList.add('hidden');
+    }
+
     // SIMPAN STATUS SEKSYEN KE URL HASH & LOCALSTORAGE
     window.location.hash = sectionId;
     localStorage.setItem('eAset_active_section', sectionId);
@@ -1614,6 +1710,7 @@ function showSection(sectionId) {
         handleBorangTypeChange();
     }
 }
+
         function updateDashboardStats() {
             document.getElementById('stat-total-aset').innerText = asetDatabase.length;
             document.getElementById('stat-total-kewpa2').innerText = asetDatabase.length;
