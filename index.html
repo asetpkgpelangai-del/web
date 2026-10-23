@@ -1436,13 +1436,14 @@ function handleLogout() {
     }
 }
   
-
 async function syncDataFromTurso() {
     if (!window.db) return;
     try {
-        // Tarik data dari jadual aset_utama
+        // 1. Tarik data dari jadual aset_utama
         const resAset = await window.db.execute("SELECT * FROM aset_utama ORDER BY created_at DESC");
-        if (resAset.rows && resAset.rows.length > 0) {
+        
+        // PEMBETULAN PENTING: Paksa asetDatabase ikut data Turso secara mutlak (walaupun kosong / 0 row)
+        if (resAset.rows) {
             asetDatabase = resAset.rows.map(row => ({
                 id: row.id,
                 group: row.group_nama,
@@ -1461,18 +1462,19 @@ async function syncDataFromTurso() {
                 jaminan: row.jaminan,
                 pembekal: row.pembekal,
                 catatan: row.catatan,
-                // MEDAN BAHARU YANG DITAMBAH:
                 caraPerolehan: row.cara_perolehan || 'PEMBELIAN LO',
                 pegawaiDaftar: row.pegawai_daftar || 'Ahmad Bin Zulkifli',
                 jawatanPegawai: row.jawatan_pegawai || 'Pegawai Aset PKG',
                 jabatanPegawai: row.jabatan_pegawai || 'PKG Pelangai'
             }));
+        } else {
+            asetDatabase = [];
         }
 
-        // Tarik aduan dari aduan_kewpa10
+        // 2. Tarik aduan dari aduan_kewpa10
         await initTursoAduanTable();
         const resAduan = await window.db.execute("SELECT * FROM aduan_kewpa10 ORDER BY created_at DESC");
-        if (resAduan.rows && resAduan.rows.length > 0) {
+        if (resAduan.rows) {
             aduanDatabase = resAduan.rows.map(row => ({
                 id: row.id,
                 noSiri: row.no_siri,
@@ -1486,20 +1488,23 @@ async function syncDataFromTurso() {
                 anggaranKos: parseFloat(row.anggaran_kos) || 0,
                 syor: row.syor
             }));
+        } else {
+            aduanDatabase = [];
         }
 
+        // Simpan semula status bersih (0 unit) ke localStorage dan kemaskini paparan
         saveStorageData();
         renderMasterTable();
         renderAduanList();
         populateStickerGroupSelect();
         populateKEWPA2Select();
-	
-	populatePadamGroupSelect();
+        populatePadamGroupSelect();
 
     } catch (err) {
         console.log("Menggunakan storan tempatan sementara.", err);
     }
 }
+
 
    async function loadStorageData() {
     const stored = localStorage.getItem('eAset_PKG_KEWPA2_Data');
