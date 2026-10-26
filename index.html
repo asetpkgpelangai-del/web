@@ -612,18 +612,18 @@
 
             </div>
 
-            <div class="md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-slate-100">
+           <div class="md:col-span-2 lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4 pt-2 border-t border-slate-100">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
                         Nama Pegawai Pendaftaran <span class="text-red-500">*</span>
                     </label>
-                    <input type="text" id="reg-pegawai" required value="Ahmad Bin Zulkifli" placeholder="Cth: Ahmad Bin Zulkifli" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <input type="text" id="reg-pegawai" required value="" placeholder="Nama Pegawai" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
                         Jawatan Pegawai <span class="text-red-500">*</span>
                     </label>
-                    <input type="text" id="reg-jawatan" required value="Pegawai Aset PKG" placeholder="Cth: Pegawai Aset PKG" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+                    <input type="text" id="reg-jawatan" required value="" placeholder="Jawatan Pegawai" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">
@@ -869,7 +869,7 @@
                                     </tbody>
                                 </table>
 
-                                <!-- PENEMPATAN -->
+                            <!-- PENEMPATAN (4 LAJUR DINAMIK) -->
                                 <div class="mb-3">
                                     <table class="w-full tbl-border border-collapse text-center">
                                         <thead>
@@ -880,27 +880,25 @@
                                         <tbody>
                                             <tr>
                                                 <td class="p-1 font-semibold bg-gray-100 text-left w-[20%]">Lokasi</td>
-                                                <td class="p-1 w-[20%]" id="kewpa2-penempatan-lokasi">Studio COE</td>
-                                                <td class="p-1 w-[20%]"></td>
-                                                <td class="p-1 w-[20%]"></td>
-                                                <td class="p-1 w-[20%]"></td>
+                                                <td class="p-1 w-[20%] text-[10px]" id="penempatan-lokasi-1"></td>
+                                                <td class="p-1 w-[20%] text-[10px]" id="penempatan-lokasi-2"></td>
+                                                <td class="p-1 w-[20%] text-[10px]" id="penempatan-lokasi-3"></td>
+                                                <td class="p-1 w-[20%] text-[10px]" id="penempatan-lokasi-4"></td>
                                             </tr>
                                             <tr>
                                                 <td class="p-1 font-semibold bg-gray-100 text-left">Tarikh</td>
-                                                <td class="p-1" id="kewpa2-penempatan-tarikh">10/05/2023</td>
-                                                <td class="p-1"></td>
-                                                <td class="p-1"></td>
-                                                <td class="p-1"></td>
+                                                <td class="p-1 text-[10px]" id="penempatan-tarikh-1"></td>
+                                                <td class="p-1 text-[10px]" id="penempatan-tarikh-2"></td>
+                                                <td class="p-1 text-[10px]" id="penempatan-tarikh-3"></td>
+                                                <td class="p-1 text-[10px]" id="penempatan-tarikh-4"></td>
                                             </tr>
-                                            
-						<tr>
- 						<td class="p-1 font-semibold bg-gray-100 text-left">Nama Pegawai</td>
-						<td class="p-1 text-left text-[10px]" id="kewpa2-penempatan-pegawai">Mohd Huszaini bin Zakaria</td>
-						<td class="p-1"></td>
- 						<td class="p-1"></td>
-   						<td class="p-1"></td>
-						</tr>
-
+                                            <tr>
+                                                <td class="p-1 font-semibold bg-gray-100 text-left">Nama Pegawai</td>
+                                                <td class="p-1 text-left text-[10px]" id="penempatan-pegawai-1"></td>
+                                                <td class="p-1 text-left text-[10px]" id="penempatan-pegawai-2"></td>
+                                                <td class="p-1 text-left text-[10px]" id="penempatan-pegawai-3"></td>
+                                                <td class="p-1 text-left text-[10px]" id="penempatan-pegawai-4"></td>
+                                            </tr>
                                             <tr>
                                                 <td class="p-1 font-semibold bg-gray-100 text-left">Tandatangan</td>
                                                 <td class="p-1"></td>
@@ -912,7 +910,7 @@
                                     </table>
                                 </div>
 
-                                <!-- PEMERIKSAAN -->
+                                <!-- PEMERIKSAAN (4 LAJUR DINAMIK) -->
                                 <div class="mb-3">
                                     <table class="w-full tbl-border border-collapse text-center">
                                         <thead>
@@ -923,24 +921,24 @@
                                         <tbody>
                                             <tr>
                                                 <td class="p-1 font-semibold bg-gray-100 text-left w-[20%]">Tarikh</td>
-                                                <td class="p-1 w-[20%]" id="kewpa2-pemeriksaan-tarikh">15/11/2023</td>
-                                                <td class="p-1 w-[20%]"></td>
-                                                <td class="p-1 w-[20%]"></td>
-                                                <td class="p-1 w-[20%]"></td>
+                                                <td class="p-1 w-[20%] text-[10px]" id="pemeriksaan-tarikh-1"></td>
+                                                <td class="p-1 w-[20%] text-[10px]" id="pemeriksaan-tarikh-2"></td>
+                                                <td class="p-1 w-[20%] text-[10px]" id="pemeriksaan-tarikh-3"></td>
+                                                <td class="p-1 w-[20%] text-[10px]" id="pemeriksaan-tarikh-4"></td>
                                             </tr>
                                             <tr>
                                                 <td class="p-1 font-semibold bg-gray-100 text-left">Status Aset</td>
-                                                <td class="p-1 font-semibold" id="kewpa2-pemeriksaan-status">Sangat Baik</td>
-                                                <td class="p-1"></td>
-                                                <td class="p-1"></td>
-                                                <td class="p-1"></td>
+                                                <td class="p-1 font-semibold text-[10px]" id="pemeriksaan-status-1"></td>
+                                                <td class="p-1 font-semibold text-[10px]" id="pemeriksaan-status-2"></td>
+                                                <td class="p-1 font-semibold text-[10px]" id="pemeriksaan-status-3"></td>
+                                                <td class="p-1 font-semibold text-[10px]" id="pemeriksaan-status-4"></td>
                                             </tr>
                                             <tr>
                                                 <td class="p-1 font-semibold bg-gray-100 text-left">Nama Pemeriksa</td>
-                                                <td class="p-1 text-left text-[10px]">Mohd Faizal Bin Hassan</td>
-                                                <td class="p-1"></td>
-                                                <td class="p-1"></td>
-                                                <td class="p-1"></td>
+                                                <td class="p-1 text-left text-[10px]" id="pemeriksaan-pegawai-1"></td>
+                                                <td class="p-1 text-left text-[10px]" id="pemeriksaan-pegawai-2"></td>
+                                                <td class="p-1 text-left text-[10px]" id="pemeriksaan-pegawai-3"></td>
+                                                <td class="p-1 text-left text-[10px]" id="pemeriksaan-pegawai-4"></td>
                                             </tr>
                                             <tr>
                                                 <td class="p-1 font-semibold bg-gray-100 text-left">Tandatangan</td>
@@ -1224,9 +1222,9 @@
                 <div class="flex justify-between"><span class="text-slate-500">Status Semasa:</span> <span id="modal-status" class="font-bold text-emerald-600"></span></div>
             </div>
 
-            <!-- Ruangan Input Kemaskini Lokasi Baharu (Tersembunyi Secara Default) -->
+           <!-- Ruangan Input Kemaskini Lokasi Baharu (Tersembunyi Secara Default) -->
             <div id="box-kemaskini-lokasi" class="hidden bg-amber-50 p-3 rounded-xl border border-amber-200 space-y-2">
-                <label class="block text-[11px] font-bold text-amber-900 uppercase">Pilih / Taip Lokasi Baharu:</label>
+                <label class="block text-[11px] font-bold text-amber-900 uppercase">Pilih Lokasi Baharu (Penempatan Seterusnya):</label>
                 <div class="flex gap-2">
                     <select id="select-lokasi-baharu" class="w-full p-2 text-xs border border-amber-300 rounded-lg outline-none bg-white font-semibold">
                         <option value="Studio COE / Makmal Robotik">Studio COE / Makmal Robotik</option>
@@ -1243,18 +1241,44 @@
                 </div>
             </div>
 
-           <!-- Action Buttons Dalam Profil Aset Kamera Telefon (Grid 3 Butang) -->
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1">
-    <button id="btn-modal-kewpa" onclick="modalBukaBorangKEWPA2()" class="py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1 shadow">
-        <i class="fa-solid fa-file-invoice"></i> KEW.PA-3
-    </button>
-    <button onclick="paparBoxTukarLokasi()" class="py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-900 rounded-lg text-xs font-bold flex items-center justify-center gap-1 shadow">
-        <i class="fa-solid fa-location-dot"></i> Tukar Lokasi
-    </button>
-    <button onclick="modalLaporRosakPantas()" class="py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1 shadow">
-        <i class="fa-solid fa-triangle-exclamation"></i> Kerosakan
-    </button>
-</div>
+            <!-- Ruangan Borang Pemeriksaan Baharu (Tersembunyi Secara Default) -->
+            <div id="box-pemeriksaan-aset" class="hidden bg-emerald-50 p-3 rounded-xl border border-emerald-200 space-y-2">
+                <label class="block text-[11px] font-bold text-emerald-900 uppercase">Pemeriksaan Keadaan Aset Semasa:</label>
+                <div class="space-y-2 text-xs">
+                    <div>
+                        <span class="text-slate-500 text-[10px] uppercase font-bold block mb-0.5">Status Keadaan Fizikal:</span>
+                        <select id="select-status-pemeriksaan" class="w-full p-2 text-xs border border-emerald-300 rounded-lg outline-none bg-white font-semibold">
+                            <option value="Sangat Baik">Sangat Baik</option>
+                            <option value="Baik">Baik</option>
+                            <option value="Perlu Penyelenggaraan">Perlu Penyelenggaraan</option>
+                            <option value="Rosak">Rosak</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span class="text-slate-500 text-[10px] uppercase font-bold block mb-0.5">Pegawai Pemeriksa:</span>
+                        <input type="text" id="input-nama-pemeriksa" class="w-full p-2 text-xs border border-emerald-300 rounded-lg outline-none bg-white font-semibold" readonly>
+                    </div>
+                    <button onclick="simpanPemeriksaanTurso()" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold shadow">
+                        Sahkan & Simpan Pemeriksaan
+                    </button>
+                </div>
+            </div>
+
+            <!-- Action Buttons Dalam Profil Aset Kamera Telefon (Grid 4 Butang) -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+                <button id="btn-modal-kewpa" onclick="modalBukaBorangKEWPA2()" class="py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1 shadow">
+                    <i class="fa-solid fa-file-invoice"></i> KEW.PA-3
+                </button>
+                <button onclick="paparBoxTukarLokasi()" class="py-2.5 bg-amber-500 hover:bg-amber-600 text-slate-900 rounded-lg text-xs font-bold flex items-center justify-center gap-1 shadow">
+                    <i class="fa-solid fa-location-dot"></i> Tukar Lokasi
+                </button>
+                <button onclick="paparBoxPemeriksaan()" class="py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1 shadow">
+                    <i class="fa-solid fa-clipboard-check"></i> Periksa
+                </button>
+                <button onclick="modalLaporRosakPantas()" class="py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1 shadow">
+                    <i class="fa-solid fa-triangle-exclamation"></i> Kerosakan
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1345,6 +1369,31 @@ async function initTursoUsersTable() {
         console.log("Jadual pengguna Turso sedia digunakan!");
     } catch (err) {
         console.error("Ralat init jadual pengguna:", err);
+    }
+}
+
+async function initTursoAduanTable() {
+    if (!window.db) return;
+    try {
+        await window.db.execute(`
+            CREATE TABLE IF NOT EXISTS aduan_kewpa10 (
+                id TEXT PRIMARY KEY,
+                no_siri TEXT,
+                nama_aset TEXT,
+                pengadu TEXT,
+                jawatan_pengadu TEXT,
+                pengguna_terakhir TEXT,
+                tarikh_rosak TEXT,
+                perihal TEXT,
+                kos_terdahulu REAL,
+                anggaran_kos REAL,
+                syor TEXT,
+                status_aduan TEXT,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        `);
+    } catch (err) {
+        console.error("Ralat init jadual aduan:", err);
     }
 }
 
@@ -1444,35 +1493,56 @@ async function syncDataFromTurso() {
         
         // PEMBETULAN PENTING: Paksa asetDatabase ikut data Turso secara mutlak (walaupun kosong / 0 row)
         if (resAset.rows) {
-            asetDatabase = resAset.rows.map(row => ({
-                id: row.id,
-                group: row.group_nama,
-                noSiri: row.no_siri,
-                nama: row.nama,
-                kodNasional: row.kod_nasional || '',
-                kategori: row.kategori,
-                subKategori: row.sub_kategori,
-                lokasi: row.lokasi,
-                tarikh: row.tarikh,
-                harga: parseFloat(row.harga) || 0,
-                status: row.status,
-                buatan: row.buatan,
-                casis: row.casis,
-                lo: row.lo,
-                jaminan: row.jaminan,
-                pembekal: row.pembekal,
-                catatan: row.catatan,
-                caraPerolehan: row.cara_perolehan || 'PEMBELIAN LO',
-                pegawaiDaftar: row.pegawai_daftar || 'Ahmad Bin Zulkifli',
-                jawatanPegawai: row.jawatan_pegawai || 'Pegawai Aset PKG',
-                jabatanPegawai: row.jabatan_pegawai || 'PKG Pelangai'
-            }));
+            asetDatabase = resAset.rows.map(row => {
+                // Parsing riwayat penempatan & pemeriksaan (jika tersimpan dalam format JSON string di database)
+                let riwayatPenempatan = [];
+                let riwayatPemeriksaan = [];
+                try {
+                    riwayatPenempatan = row.sejarah_penempatan ? JSON.parse(row.sejarah_penempatan) : [];
+                } catch (e) {
+                    riwayatPenempatan = [];
+                }
+                try {
+                    riwayatPemeriksaan = row.sejarah_pemeriksaan ? JSON.parse(row.sejarah_pemeriksaan) : [];
+                } catch (e) {
+                    riwayatPemeriksaan = [];
+                }
+
+                return {
+                    id: row.id,
+                    group: row.group_nama,
+                    noSiri: row.no_siri,
+                    nama: row.nama,
+                    kodNasional: row.kod_nasional || '',
+                    kategori: row.kategori,
+                    subKategori: row.sub_kategori,
+                    lokasiAsal: row.lokasi_asal || row.lokasi,
+                    lokasi: row.lokasi,
+                    tarikh: row.tarikh,
+                    harga: parseFloat(row.harga) || 0,
+                    status: row.status,
+                    buatan: row.buatan,
+                    casis: row.casis,
+                    lo: row.lo,
+                    jaminan: row.jaminan,
+                    pembekal: row.pembekal,
+                    catatan: row.catatan,
+                    caraPerolehan: row.cara_perolehan || 'PEROLEHAN',
+                    pegawaiDaftar: row.pegawai_daftar || 'Amirul Akbar Bin Amir',
+                    jawatanPegawai: row.jawatan_pegawai || 'PPTM',
+                    jabatanPegawai: row.jabatan_pegawai || 'PKG Pelangai',
+                    sejarahPenempatan: riwayatPenempatan,
+                    sejarahPemeriksaan: riwayatPemeriksaan
+                };
+            });
         } else {
             asetDatabase = [];
         }
 
         // 2. Tarik aduan dari aduan_kewpa10
-        await initTursoAduanTable();
+        if (typeof initTursoAduanTable === 'function') {
+            await initTursoAduanTable();
+        }
         const resAduan = await window.db.execute("SELECT * FROM aduan_kewpa10 ORDER BY created_at DESC");
         if (resAduan.rows) {
             aduanDatabase = resAduan.rows.map(row => ({
@@ -1784,6 +1854,7 @@ async function handleFormDaftar(e) {
                 kodNasional,
                 kategori,
                 subKategori,
+                lokasiAsal: lokasi,        // <-- TAMBAH INI
                 lokasi,
                 caraPerolehan,
                 tarikh,
@@ -1797,13 +1868,15 @@ async function handleFormDaftar(e) {
                 catatan,
                 pegawaiDaftar,
                 jawatanPegawai,
-                jabatanPegawai
+                jabatanPegawai,
+                sejarahPenempatan: [],    // <-- TAMBAH INI
+                sejarahPemeriksaan: []    // <-- TAMBAH INI
             };
             asetDatabase.push(newAsset);
             newItems.push(newAsset);
         }
     } else {
-        const newAsset = {
+       const newAsset = {
             id: 'AST-' + Date.now(),
             group: nama,
             noSiri: prefix,
@@ -1811,6 +1884,7 @@ async function handleFormDaftar(e) {
             kodNasional,
             kategori,
             subKategori,
+            lokasiAsal: lokasi,            // <-- TAMBAH INI
             lokasi,
             caraPerolehan,
             tarikh,
@@ -1824,7 +1898,9 @@ async function handleFormDaftar(e) {
             catatan,
             pegawaiDaftar,
             jawatanPegawai,
-            jabatanPegawai
+            jabatanPegawai,
+            sejarahPenempatan: [],        // <-- TAMBAH INI
+            sejarahPemeriksaan: []        // <-- TAMBAH INI
         };
         asetDatabase.push(newAsset);
         newItems.push(newAsset);
@@ -2124,14 +2200,15 @@ function handleBorangTypeChange() {
             const kategoriText = isKewpa5 ? 'Harta Modal (RM2,000 ke atas)' : 'Aset Alih Bernilai Rendah (kurang RM2,000)';
             rowsHtml = `<tr><td colspan="8" class="p-3 text-center text-slate-400">Tiada rekod ${kategoriText} didaftarkan.</td></tr>`;
         } else {
-            senaraiAset.forEach((item, idx) => {
+            
+		senaraiAset.forEach((item, idx) => {
                 jumlahHargaAsal += parseFloat(item.harga) || 0;
                 rowsHtml += `
                     <tr class="page-break-inside-avoid">
                         <td class="p-1.5 text-center">${idx + 1}</td>
                         <td class="p-1.5 font-mono font-bold text-center">${item.noSiri}</td>
                         <td class="p-1.5 text-left">${item.nama}</td>
-                        <td class="p-1.5 text-center">Pembelian (LO)</td>
+                        <td class="p-1.5 text-center uppercase">${item.caraPerolehan || 'PEROLEHAN'}</td>
                         <td class="p-1.5 text-center">${formatTarikhDDMMYYYY(item.tarikh)}</td>
                         <td class="p-1.5 text-right font-mono">${item.harga.toFixed(2)}</td>
                         <td class="p-1.5 text-right font-mono">-</td>
@@ -2238,6 +2315,12 @@ function renderKEWPA7View(selectedLokasi = null) {
 
     const asetDiLokasi = asetDatabase.filter(a => a.lokasi === lokasiAktif);
 
+    // Dapatkan maklumat pegawai daripada aset di lokasi tersebut (atau aset pertama)
+    const sampelAsetLokasi = asetDiLokasi[0] || asetDatabase[0] || {};
+    const namaPenyedia = sampelAsetLokasi.pegawaiDaftar || 'Amirul Akbar Bin Amir';
+    const jawatanPenyedia = sampelAsetLokasi.jawatanPegawai || 'PPTM';
+    const tarikhSedia = sampelAsetLokasi.tarikh ? formatTarikhDDMMYYYY(sampelAsetLokasi.tarikh) : '-';
+
     let rowsHtml = '';
     if (asetDiLokasi.length === 0) {
         rowsHtml = `<tr><td colspan="4" class="p-3 text-center text-slate-400">Tiada aset ditemui di lokasi ini.</td></tr>`;
@@ -2295,15 +2378,15 @@ function renderKEWPA7View(selectedLokasi = null) {
                 </tbody>
             </table>
 
-            <!-- BAHAGIAN TANDATANGAN (a) & (b) DIPETAKKAN SUPAYA TIDAK TERPOTONG -->
+           <!-- BAHAGIAN TANDATANGAN (a) & (b) DIPETAKKAN SUPAYA TIDAK TERPOTONG -->
             <div class="grid grid-cols-2 gap-8 text-[10px] mb-6 pt-2 page-break-inside-avoid">
                 <div>
                     <p class="font-semibold mb-8">(a) Disediakan oleh:</p>
                     <div class="border-b border-dotted border-black w-3/4 mb-1"></div>
                     <p class="text-[9px] mb-2">Tandatangan</p>
-                    <p>Nama: <span class="border-b border-black inline-block w-48"></span></p>
-                    <p class="mt-1">Jawatan: <span class="border-b border-black inline-block w-44"></span></p>
-                    <p class="mt-1">Tarikh: <span class="border-b border-black inline-block w-48"></span></p>
+                    <p>Nama: <span class="border-b border-black inline-block w-48 font-bold">${namaPenyedia}</span></p>
+                    <p class="mt-1">Jawatan: <span class="border-b border-black inline-block w-44">${jawatanPenyedia}</span></p>
+                    <p class="mt-1">Tarikh: <span class="border-b border-black inline-block w-48">${tarikhSedia}</span></p>
                 </div>
                 <div>
                     <p class="font-semibold mb-8">(b) Disahkan oleh:</p>
@@ -2314,7 +2397,6 @@ function renderKEWPA7View(selectedLokasi = null) {
                     <p class="mt-1">Tarikh: <span class="border-b border-black inline-block w-48"></span></p>
                 </div>
             </div>
-
             <div class="border-t border-black pt-2 text-[8px] leading-tight space-y-0.5 page-break-inside-avoid">
                 <p><span class="font-bold">Nota:</span> a) Disediakan oleh Pegawai Aset atau wakilnya (contoh: Pembantu Tadbir Aset/lain-lain jawatan)</p>
                 <p class="pl-6">b) Pegawai yang mengesahkan ialah pegawai yang bertanggungjawab ke atas Aset Alih berkenaan. Contohnya:-</p>
@@ -2947,25 +3029,82 @@ function renderKEWPAView() {
     document.getElementById('kewpa2-casis').innerText = aset.casis || '-';
     document.getElementById('kewpa2-komponen').innerText = aset.catatan || '-';
 
-    document.getElementById('kewpa2-penempatan-lokasi').innerText = aset.lokasi;
-    document.getElementById('kewpa2-penempatan-tarikh').innerText = formattedTarikh;
-    document.getElementById('kewpa2-pemeriksaan-tarikh').innerText = formattedTarikh;
-    document.getElementById('kewpa2-pemeriksaan-status').innerText = aset.status;
+    // =========================================================
+    // 4. PEMETAAN 4 LAJUR: PENEMPATAN
+    // =========================================================
+    // Lajur 1: Sentiasa mengekalkan lokasi asal pendaftaran & pegawai pendaftar asal
+    const penempatanLokasi1 = document.getElementById('penempatan-lokasi-1');
+    const penempatanTarikh1 = document.getElementById('penempatan-tarikh-1');
+    const penempatanPegawai1 = document.getElementById('penempatan-pegawai-1');
 
-	// MASUKKAN NAMA PEGAWAI PENEMPATAN DINAMIK
-    const penempatanPegawaiElem = document.querySelector('#view-part-a table:nth-of-type(2) tr:nth-child(3) td:nth-child(2)');
-    if (penempatanPegawaiElem) {
-        penempatanPegawaiElem.innerText = aset.pegawaiDaftar || 'Mohd Huszaini bin Zakaria';
+    if (penempatanLokasi1) penempatanLokasi1.innerText = aset.lokasiAsal || aset.lokasi;
+    if (penempatanTarikh1) penempatanTarikh1.innerText = formattedTarikh;
+    if (penempatanPegawai1) penempatanPegawai1.innerText = aset.pegawaiDaftar || 'Amirul Akbar Bin Amir';
+
+    // Kosongkan Lajur 2, 3, dan 4 terlebih dahulu
+    for (let c = 2; c <= 4; c++) {
+        const elLok = document.getElementById(`penempatan-lokasi-${c}`);
+        const elTar = document.getElementById(`penempatan-tarikh-${c}`);
+        const elPeg = document.getElementById(`penempatan-pegawai-${c}`);
+        if (elLok) elLok.innerText = '';
+        if (elTar) elTar.innerText = '';
+        if (elPeg) elPeg.innerText = '';
+    }
+
+    // Isi Lajur 2, 3, atau 4 sekiranya ada rekod pertukaran lokasi
+    if (aset.sejarahPenempatan && Array.isArray(aset.sejarahPenempatan)) {
+        aset.sejarahPenempatan.slice(0, 3).forEach((item, idx) => {
+            const colIndex = idx + 2;
+            const elLok = document.getElementById(`penempatan-lokasi-${colIndex}`);
+            const elTar = document.getElementById(`penempatan-tarikh-${colIndex}`);
+            const elPeg = document.getElementById(`penempatan-pegawai-${colIndex}`);
+
+            if (elLok) elLok.innerText = item.lokasi || '';
+            if (elTar) elTar.innerText = item.tarikh || '';
+            if (elPeg) elPeg.innerText = item.pegawai || '';
+        });
+    }
+
+    // =========================================================
+    // 5. PEMETAAN 4 LAJUR: PEMERIKSAAN
+    // =========================================================
+    // Kosongkan kesemua 4 lajur pemeriksaan
+    for (let p = 1; p <= 4; p++) {
+        const elTar = document.getElementById(`pemeriksaan-tarikh-${p}`);
+        const elSta = document.getElementById(`pemeriksaan-status-${p}`);
+        const elPeg = document.getElementById(`pemeriksaan-pegawai-${p}`);
+        if (elTar) elTar.innerText = '';
+        if (elSta) elSta.innerText = '';
+        if (elPeg) elPeg.innerText = '';
+    }
+
+    // Isi Lajur Pemeriksaan secara berturutan mengikut rekod semakan yang disimpan
+    if (aset.sejarahPemeriksaan && Array.isArray(aset.sejarahPemeriksaan)) {
+        aset.sejarahPemeriksaan.slice(0, 4).forEach((item, idx) => {
+            const colIndex = idx + 1;
+            const elTar = document.getElementById(`pemeriksaan-tarikh-${colIndex}`);
+            const elSta = document.getElementById(`pemeriksaan-status-${colIndex}`);
+            const elPeg = document.getElementById(`pemeriksaan-pegawai-${colIndex}`);
+
+            if (elTar) elTar.innerText = item.tarikh || '';
+            if (elSta) elSta.innerText = item.status || '';
+            if (elPeg) elPeg.innerText = item.pegawai || '';
+        });
     }
 }
-
-        function populateAduanSelect() {
-            const select = document.getElementById('aduan-select-aset');
-            select.innerHTML = '<option value="">-- Pilih Aset Rosak --</option>';
-            asetDatabase.forEach(item => {
-                select.innerHTML += `<option value="${item.id}">${item.noSiri} - ${item.nama}</option>`;
-            });
-        }
+       function populateAduanSelect() {
+    const select = document.getElementById('aduan-select-aset');
+    if (!select) return;
+    
+    select.innerHTML = '<option value="">-- Pilih Aset Rosak --</option>';
+    
+    // Tapis aset supaya yang sudah berstatus 'Rosak' tidak dipilih dua kali
+    const asetBolehDiadu = asetDatabase.filter(item => item.status !== 'Rosak');
+    
+    asetBolehDiadu.forEach(item => {
+        select.innerHTML += `<option value="${item.id}">${item.noSiri} - ${item.nama}</option>`;
+    });
+} 
 
 async function handleFormAduan(e) {
     e.preventDefault();
@@ -3119,13 +3258,16 @@ function quickInspect() {
     if (found) openModalDetail(found.id);
 }
 
-   function openModalDetail(id) {
+function openModalDetail(id) {
     selectedAsetForModal = asetDatabase.find(a => a.id === id);
     if (!selectedAsetForModal) return;
     
-    // Sembunyikan box kemaskini lokasi secara default
+    // Sembunyikan box kemaskini lokasi & pemeriksaan secara default
     const boxLokasi = document.getElementById('box-kemaskini-lokasi');
-    if(boxLokasi) boxLokasi.classList.add('hidden');
+    if (boxLokasi) boxLokasi.classList.add('hidden');
+
+    const boxPeriksa = document.getElementById('box-pemeriksaan-aset');
+    if (boxPeriksa) boxPeriksa.classList.add('hidden');
 
     // Tentukan jenis borang secara automatik berdasarkan harga perolehan
     const jenisKewpa = selectedAsetForModal.harga >= 2000 ? 'KEW.PA-3' : 'KEW.PA-4';
@@ -3152,78 +3294,163 @@ function quickInspect() {
     document.getElementById('modal-detail').classList.remove('hidden');
 }
 
-        function closeModal() {
-            document.getElementById('modal-detail').classList.add('hidden');
-        }
+function closeModal() {
+    document.getElementById('modal-detail').classList.add('hidden');
+}
 
-      function modalBukaBorangKEWPA2() {
+function modalBukaBorangKEWPA2() {
     closeModal();
     if (!selectedAsetForModal) return;
 
     const jenisKewpa = selectedAsetForModal.harga >= 2000 ? 'KEW.PA-3' : 'KEW.PA-4';
 
-    // Pergi ke Seksyen Borang Rasmi
     showSection('borang-rasmi');
-
-    // Setkan dropdown jenis borang kepada KEW.PA-3 atau KEW.PA-4
     document.getElementById('select-jenis-kewpa').value = jenisKewpa;
-
-    // Tapis dan pilih unit aset berkenaan
     handleBorangTypeChange();
     document.getElementById('select-kewpa2-unit').value = selectedAsetForModal.id;
     renderKEWPAView();
 }
 
-        function modalLaporRosakPantas() {
-            closeModal();
-            showSection('aduan-rosak');
-            document.getElementById('aduan-select-aset').value = selectedAsetForModal.id;
-        }
+function modalLaporRosakPantas() {
+    closeModal();
+    showSection('aduan-rosak');
+    document.getElementById('aduan-select-aset').value = selectedAsetForModal.id;
+}
 
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = `p-3 rounded-xl shadow-2xl border text-xs font-semibold bg-slate-800 text-white`;
-            toast.innerHTML = message;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `p-3 rounded-xl shadow-2xl border text-xs font-semibold bg-slate-800 text-white`;
+    toast.innerHTML = message;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+}
 
+// TOGGLE KOTAK TUKAR LOKASI
 function paparBoxTukarLokasi() {
-            const box = document.getElementById('box-kemaskini-lokasi');
-            box.classList.toggle('hidden');
+    const boxLokasi = document.getElementById('box-kemaskini-lokasi');
+    const boxPeriksa = document.getElementById('box-pemeriksaan-aset');
+    if (boxPeriksa) boxPeriksa.classList.add('hidden');
+    if (boxLokasi) boxLokasi.classList.toggle('hidden');
+}
+
+// TOGGLE KOTAK PEMERIKSAAN
+function paparBoxPemeriksaan() {
+    const boxPeriksa = document.getElementById('box-pemeriksaan-aset');
+    const boxLokasi = document.getElementById('box-kemaskini-lokasi');
+    if (boxLokasi) boxLokasi.classList.add('hidden');
+
+    if (boxPeriksa) {
+        boxPeriksa.classList.toggle('hidden');
+        const inputNama = document.getElementById('input-nama-pemeriksa');
+        if (inputNama) {
+            // Isikan nama pegawai semasa yang log masuk secara automatik
+            inputNama.value = currentUser ? currentUser.name : (selectedAsetForModal.pegawaiDaftar || 'Amirul Akbar Bin Amir');
         }
-
-        async function simpanLokasiBaharuTurso() {
-            if (!selectedAsetForModal) return;
-            const lokasiBaharu = document.getElementById('select-lokasi-baharu').value;
-
-            // 1. Kemaskini pembolehubah tempatan
-            selectedAsetForModal.lokasi = lokasiBaharu;
-            const itemInDb = asetDatabase.find(a => a.id === selectedAsetForModal.id);
-            if (itemInDb) itemInDb.lokasi = lokasiBaharu;
-
-            // 2. Simpan ke LocalStorage
-            saveStorageData();
-            renderMasterTable();
-            document.getElementById('modal-lokasi').innerText = lokasiBaharu;
-            document.getElementById('box-kemaskini-lokasi').classList.add('hidden');
-
-            showToast("Lokasi berjaya dikemaskini!", "success");
-
-           // // 3. Kemaskini secara Real-Time di Turso Cloud Database
-if (window.db) {
-    try {
-        await window.db.execute({
-            sql: "UPDATE aset_utama SET lokasi = ? WHERE id = ?",
-            args: [lokasiBaharu, selectedAsetForModal.id]
-        });
-        showToast("Kemaskini lokasi disinkronkan ke Turso Cloud!", "success");
-    } catch (err) {
-        console.error("Ralat kemaskini lokasi Turso:", err);
     }
 }
+
+// 1. SIMPAN LOKASI BAHARU (MASUK KE LAJUR 2, 3, 4 PENEMPATAN)
+async function simpanLokasiBaharuTurso() {
+    if (!selectedAsetForModal) return;
+    const lokasiBaharu = document.getElementById('select-lokasi-baharu').value;
+    const tarikhHariIni = formatTarikhDDMMYYYY(new Date().toISOString().split('T')[0]);
+    const namaPegawai = currentUser ? currentUser.name : (selectedAsetForModal.pegawaiDaftar || 'Amirul Akbar Bin Amir');
+
+    // Pastikan lokasi asal pendaftaran disimpan jika belum ada
+    if (!selectedAsetForModal.lokasiAsal) {
+        selectedAsetForModal.lokasiAsal = selectedAsetForModal.lokasi;
+    }
+
+    if (!selectedAsetForModal.sejarahPenempatan) {
+        selectedAsetForModal.sejarahPenempatan = [];
+    }
+
+    // Tambah rekod perpindahan baharu ke array sejarah
+    selectedAsetForModal.sejarahPenempatan.push({
+        lokasi: lokasiBaharu,
+        tarikh: tarikhHariIni,
+        pegawai: namaPegawai
+    });
+
+    // Kemaskini lokasi semasa
+    selectedAsetForModal.lokasi = lokasiBaharu;
+
+    const itemInDb = asetDatabase.find(a => a.id === selectedAsetForModal.id);
+    if (itemInDb) {
+        itemInDb.lokasi = lokasiBaharu;
+        itemInDb.lokasiAsal = selectedAsetForModal.lokasiAsal;
+        itemInDb.sejarahPenempatan = selectedAsetForModal.sejarahPenempatan;
+    }
+
+    saveStorageData();
+    renderMasterTable();
+    document.getElementById('modal-lokasi').innerText = lokasiBaharu;
+    document.getElementById('box-kemaskini-lokasi').classList.add('hidden');
+
+    showToast("Lokasi penempatan baharu berjaya direkodkan!", "success");
+
+    // Simpan ke Turso Cloud Database
+    if (window.db) {
+        try {
+            await window.db.execute({
+                sql: "UPDATE aset_utama SET lokasi = ?, sejarah_penempatan = ? WHERE id = ?",
+                args: [lokasiBaharu, JSON.stringify(selectedAsetForModal.sejarahPenempatan), selectedAsetForModal.id]
+            });
+            showToast("Kemaskini lokasi disinkronkan ke Turso Cloud!", "success");
+        } catch (err) {
+            console.error("Ralat kemaskini lokasi Turso:", err);
         }
+    }
+}
+
+// 2. SIMPAN PEMERIKSAAN ASET (MASUK KE 4 LAJUR PEMERIKSAAN)
+async function simpanPemeriksaanTurso() {
+    if (!selectedAsetForModal) return;
+    const statusFizikal = document.getElementById('select-status-pemeriksaan').value;
+    const tarikhHariIni = formatTarikhDDMMYYYY(new Date().toISOString().split('T')[0]);
+    const namaPemeriksa = document.getElementById('input-nama-pemeriksa').value;
+
+    if (!selectedAsetForModal.sejarahPemeriksaan) {
+        selectedAsetForModal.sejarahPemeriksaan = [];
+    }
+
+    // Tambah rekod semakan baharu ke array sejarah pemeriksaan
+    selectedAsetForModal.sejarahPemeriksaan.push({
+        tarikh: tarikhHariIni,
+        status: statusFizikal,
+        pegawai: namaPemeriksa
+    });
+
+    // Kemaskini status fizikal aset semasa
+    selectedAsetForModal.status = statusFizikal;
+
+    const itemInDb = asetDatabase.find(a => a.id === selectedAsetForModal.id);
+    if (itemInDb) {
+        itemInDb.status = statusFizikal;
+        itemInDb.sejarahPemeriksaan = selectedAsetForModal.sejarahPemeriksaan;
+    }
+
+    saveStorageData();
+    renderMasterTable();
+    document.getElementById('modal-status').innerText = statusFizikal;
+    document.getElementById('box-pemeriksaan-aset').classList.add('hidden');
+
+    showToast("Pemeriksaan aset berjaya direkodkan!", "success");
+
+    // Simpan ke Turso Cloud Database
+    if (window.db) {
+        try {
+            await window.db.execute({
+                sql: "UPDATE aset_utama SET status = ?, sejarah_pemeriksaan = ? WHERE id = ?",
+                args: [statusFizikal, JSON.stringify(selectedAsetForModal.sejarahPemeriksaan), selectedAsetForModal.id]
+            });
+            showToast("Rekod pemeriksaan disinkronkan ke Turso Cloud!", "success");
+        } catch (err) {
+            console.error("Ralat kemaskini pemeriksaan Turso:", err);
+        }
+    }
+}
 
     </script>
 </body>
