@@ -286,13 +286,17 @@
                 </div>
             </div>
 
-            <div>
-                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kata Laluan</label>
-                <div class="relative">
-                    <input type="password" id="login-password" required placeholder="••••••••" class="w-full pl-10 pr-4 py-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                    <i class="fa-solid fa-lock absolute left-3.5 top-3 text-slate-400 text-sm"></i>
-                </div>
-            </div>
+         <!-- KOD BAHARU DENGAN BUTANG MATA -->
+<div>
+    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Kata Laluan</label>
+    <div class="relative">
+        <input type="password" id="login-password" required placeholder="••••••••" class="w-full pl-10 pr-10 py-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+        <i class="fa-solid fa-lock absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600 focus:outline-none p-0.5">
+            <i id="toggle-pwd-icon" class="fa-solid fa-eye text-sm"></i>
+        </button>
+    </div>
+</div>
 
             <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg text-sm transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
                 <i class="fa-solid fa-right-to-bracket"></i> Log Masuk Sistem
@@ -305,8 +309,8 @@
     </div>
 </div>
 
-    <!-- Toast Notification Container -->
-    <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 no-print"></div>
+   <!-- Toast Notification Container -->
+<div id="toast-container" class="fixed top-5 right-5 z-[200] flex flex-col gap-2 no-print"></div>
 
 <!-- OVERLAY UNTUK TELEFON -->
 <div id="sidebar-backdrop" onclick="toggleSidebar()" class="fixed inset-0 bg-slate-900/60 z-40 hidden md:hidden transition-opacity"></div>
@@ -580,10 +584,11 @@
                     <input type="text" id="reg-casis" placeholder="Cth: SN-ROB2023-01" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-mono">
                 </div>
 
-                <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tarikh Diterima</label>
-                    <input type="date" id="reg-tarikh" value="2023-05-10" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                </div>
+               <!-- KOD BAHARU -->
+		<div>
+  		  <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tarikh Diterima</label>
+   		 <input type="date" id="reg-tarikh" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
+		</div>
 
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Harga Perolehan Asal (RM)</label>
@@ -1326,6 +1331,17 @@ window.addEventListener('DOMContentLoaded', async () => {
     renderAduanList();
     populatePadamGroupSelect();
 
+    // 6. Tetapkan tarikh semasa (hari ini) secara automatik
+    const today = new Date().toISOString().split('T')[0];
+    const tarikhDaftar = document.getElementById('reg-tarikh');
+    if (tarikhDaftar) {
+        tarikhDaftar.value = today;
+    }
+    const tarikhAduan = document.getElementById('aduan-tarikh-rosak');
+    if (tarikhAduan) {
+        tarikhAduan.value = today;
+    }
+
     // BACA SEKSYEN TERAKHIR BILA REFRESH
     const savedSection = window.location.hash.replace('#', '') || 
                          localStorage.getItem('eAset_active_section') || 
@@ -1408,11 +1424,37 @@ function checkUserSession() {
     }
 }
 
+
+function togglePasswordVisibility() {
+    const pwdInput = document.getElementById('login-password');
+    const icon = document.getElementById('toggle-pwd-icon');
+
+    if (!pwdInput || !icon) return;
+
+    if (pwdInput.type === 'password') {
+        pwdInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        pwdInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+
+
 // 3. Pengendali Log Masuk
 async function handleLogin(e) {
     e.preventDefault();
+    const btnSubmit = e.target.querySelector('button[type="submit"]');
+    const originalBtnText = btnSubmit.innerHTML;
+
     const usernameInput = document.getElementById('login-username').value.trim();
     const passwordInput = document.getElementById('login-password').value;
+
+    // Kunci butang semasa proses pengesahan sedang berjalan
+    btnSubmit.disabled = true;
+    btnSubmit.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Memeriksa...`;
 
     let foundUser = null;
 
@@ -1422,7 +1464,7 @@ async function handleLogin(e) {
                 sql: "SELECT * FROM pengguna_sistem WHERE username = ? AND password = ?",
                 args: [usernameInput, passwordInput]
             });
-            if (res.rows.length > 0) {
+            if (res.rows && res.rows.length > 0) {
                 const row = res.rows[0];
                 foundUser = { id: row.id, username: row.username, name: row.name, role: row.role, dept: row.dept };
             }
@@ -1431,24 +1473,38 @@ async function handleLogin(e) {
         }
     }
 
+    // Jika tiada dalam Turso atau peranti offline, semak pengguna default
     if (!foundUser) {
         foundUser = defaultUsers.find(u => u.username === usernameInput && u.password === passwordInput);
     }
+
+    // Kembalikan butang ke keadaan asal
+    btnSubmit.disabled = false;
+    btnSubmit.innerHTML = originalBtnText;
 
     if (foundUser) {
         currentUser = foundUser;
         localStorage.setItem('eAset_logged_user', JSON.stringify(currentUser));
         applyUserSession();
         
-        // TAMBAH BARIS INI: Paksa bertukar ke Dashboard sebaik sahaja log masuk berjaya!
+        // Tukar ke paparan Dashboard
         showSection('dashboard');
         
         showToast(`Selamat datang, ${currentUser.name}!`, "success");
     } else {
+        // Paparkan amaran toast ralat
         showToast("ID Pegawai atau Kata Laluan Salah!", "error");
+
+        // Kosongkan kotak kata laluan & fokus semula untuk percubaan seterusnya
+        const pwdInput = document.getElementById('login-password');
+        if (pwdInput) {
+            pwdInput.value = '';
+            pwdInput.focus();
+            pwdInput.classList.add('border-red-500', 'ring-2', 'ring-red-200');
+            setTimeout(() => pwdInput.classList.remove('border-red-500', 'ring-2', 'ring-red-200'), 2000);
+        }
     }
 }
-
 // 4. Salin Maklumat Pengguna ke Borang Pendaftaran Automatik
 function applyUserSession() {
     document.getElementById('login-overlay').classList.add('hidden');
@@ -3319,11 +3375,30 @@ function modalLaporRosakPantas() {
 
 function showToast(message, type = 'info') {
     const container = document.getElementById('toast-container');
+    if (!container) return;
+
     const toast = document.createElement('div');
-    toast.className = `p-3 rounded-xl shadow-2xl border text-xs font-semibold bg-slate-800 text-white`;
-    toast.innerHTML = message;
+    
+    // Tetapan warna dan ikon mengikut jenis mesej
+    let bgClass = "bg-slate-800 text-white border-slate-700";
+    let iconClass = "fa-solid fa-circle-info text-blue-400";
+
+    if (type === 'error') {
+        bgClass = "bg-red-600 text-white border-red-700 shadow-red-500/30";
+        iconClass = "fa-solid fa-circle-exclamation text-white";
+    } else if (type === 'success') {
+        bgClass = "bg-emerald-600 text-white border-emerald-700 shadow-emerald-500/30";
+        iconClass = "fa-solid fa-circle-check text-white";
+    }
+
+    toast.className = `p-3.5 rounded-xl shadow-2xl border text-xs font-semibold flex items-center gap-2.5 transition-all transform duration-200 ${bgClass}`;
+    toast.innerHTML = `<i class="${iconClass} text-sm"></i> <span>${message}</span>`;
+    
     container.appendChild(toast);
-    setTimeout(() => toast.remove(), 3000);
+    setTimeout(() => {
+        toast.classList.add('opacity-0', 'scale-95');
+        setTimeout(() => toast.remove(), 300);
+    }, 3500);
 }
 
 // TOGGLE KOTAK TUKAR LOKASI
