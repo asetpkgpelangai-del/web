@@ -424,7 +424,7 @@
                         </span>
                         <h2 class="text-2xl sm:text-3xl font-extrabold mb-2">e-ASET PKG Pelangai</h2>
                         <p class="text-blue-100 text-sm leading-relaxed mb-4">
-                            Pengurusan pendaftaran aset pukal automatik, imbasan Kod QR telefon pintar, dan cetakan borang rasmi KEW.PA[cite: 1, 6, 7].
+                            Pengurusan pendaftaran aset pukal automatik, imbasan Kod QR telefon pintar, dan cetakan borang rasmi KEW.PA.
                         </p>
                         <div class="flex flex-wrap gap-3">
                             <button onclick="startCameraScanner()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-semibold text-sm shadow transition-colors flex items-center gap-2">
@@ -1307,21 +1307,19 @@
         let selectedAsetForModal = null;
 
 window.addEventListener('DOMContentLoaded', async () => {
-    // 1. Cipta & sediakan jadual pengguna Turso
-    await initTursoUsersTable();
+    // 1. TUKAR KE SEKSYEN TERAKHIR SERTA-MERTA (MENGELAK KELIPAN / DELAY KE DASHBOARD)
+    const savedSection = window.location.hash.replace('#', '') || 
+                         localStorage.getItem('eAset_active_section') || 
+                         'dashboard';
+    showSection(savedSection);
 
     // 2. Semak sesi log masuk pegawai
     checkUserSession();
 
-    // 3. Muat data storan tempatan dahulu
+    // 3. Muat data storan tempatan dahulu (pantas & offline-ready)
     await loadStorageData();
 
-    // 4. Tarik data dari Turso Cloud Database secara automatik
-    if (window.db) {
-        await syncDataFromTurso();
-    }
-
-    // 5. Kemaskini dan bina semula paparan jadual
+    // 4. Kemaskini dan bina paparan jadual menggunakan data tempatan serta-merta
     updateDashboardStats();
     renderRecentTable();
     renderMasterTable();
@@ -1331,7 +1329,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     renderAduanList();
     populatePadamGroupSelect();
 
-    // 6. Tetapkan tarikh semasa (hari ini) secara automatik
+    // 5. Tetapkan tarikh semasa (hari ini) secara automatik
     const today = new Date().toISOString().split('T')[0];
     const tarikhDaftar = document.getElementById('reg-tarikh');
     if (tarikhDaftar) {
@@ -1342,12 +1340,21 @@ window.addEventListener('DOMContentLoaded', async () => {
         tarikhAduan.value = today;
     }
 
-    // BACA SEKSYEN TERAKHIR BILA REFRESH
-    const savedSection = window.location.hash.replace('#', '') || 
-                         localStorage.getItem('eAset_active_section') || 
-                         'dashboard';
-    
-    showSection(savedSection);
+    // 6. Jalankan tugasan pangkalan data Turso di latar belakang
+    if (window.db) {
+        await initTursoUsersTable();
+        await syncDataFromTurso();
+
+        // 7. Segarkan semula paparan dengan data terkini dari Turso
+        updateDashboardStats();
+        renderRecentTable();
+        renderMasterTable();
+        populateStickerGroupSelect();
+        populateKEWPA2Select();
+        populateAduanSelect();
+        renderAduanList();
+        populatePadamGroupSelect();
+    }
 });
 
 // DATABASE PENGGUNA DEFAULT (SAMPEL AKAUN INDIVIDU)
@@ -1399,7 +1406,7 @@ async function initTursoAduanTable() {
                 pengadu TEXT,
                 jawatan_pengadu TEXT,
                 pengguna_terakhir TEXT,
-                tarikh_rosak TEXT,
+                tarikh TEXT,
                 perihal TEXT,
                 kos_terdahulu REAL,
                 anggaran_kos REAL,
@@ -1415,7 +1422,7 @@ async function initTursoAduanTable() {
 
 // 2. Semak Sesi Log Masuk
 function checkUserSession() {
-    const savedUser = localStorage.getItem('eAset_logged_user');
+    const savedUser = sessionStorage.getItem('eAset_logged_user'); // Guna sessionStorage
     if (savedUser) {
         currentUser = JSON.parse(savedUser);
         applyUserSession();
@@ -1478,13 +1485,14 @@ async function handleLogin(e) {
         foundUser = defaultUsers.find(u => u.username === usernameInput && u.password === passwordInput);
     }
 
-    // Kembalikan butang ke keadaan asal
+   // Kembalikan butang ke keadaan asal
     btnSubmit.disabled = false;
     btnSubmit.innerHTML = originalBtnText;
 
     if (foundUser) {
         currentUser = foundUser;
-        localStorage.setItem('eAset_logged_user', JSON.stringify(currentUser));
+        // Gantikan localStorage dengan sessionStorage agar auto logout bila browser ditutup
+        sessionStorage.setItem('eAset_logged_user', JSON.stringify(currentUser));
         applyUserSession();
         
         // Tukar ke paparan Dashboard
@@ -1505,6 +1513,7 @@ async function handleLogin(e) {
         }
     }
 }
+
 // 4. Salin Maklumat Pengguna ke Borang Pendaftaran Automatik
 function applyUserSession() {
     document.getElementById('login-overlay').classList.add('hidden');
@@ -1525,8 +1534,9 @@ function applyUserSession() {
 // 5. Log Keluar
 function handleLogout() {
     if (confirm("Adakah anda pasti untuk log keluar?")) {
-        // 1. Padam sesi pengguna
-        localStorage.removeItem('eAset_logged_user');
+        // 1. Padam sesi pengguna dari sessionStorage & localStorage (pembersihan penuh)
+        sessionStorage.removeItem('eAset_logged_user');
+        localStorage.removeItem('eAset_logged_user'); // Sebagai langkah berjaga-jaga
         
         // 2. Padam memori paparan terakhir
         localStorage.removeItem('eAset_active_section');
@@ -1608,7 +1618,7 @@ async function syncDataFromTurso() {
                 pengadu: row.pengadu,
                 jawatanPengadu: row.jawatan_pengadu,
                 penggunaTerakhir: row.pengguna_terakhir,
-                tarikhRosak: row.tarikh_rosak,
+                tarikhRosak: row.tarikh || row.tarikh_rosak, // Menyokong lajur 'tarikh' sebenar di Turso
                 perihal: row.perihal,
                 kosTerdahulu: parseFloat(row.kos_terdahulu) || 0,
                 anggaranKos: parseFloat(row.anggaran_kos) || 0,
